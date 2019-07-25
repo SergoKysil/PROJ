@@ -3,37 +3,39 @@
 
 #include "pch.h"
 #include <iostream>
+#include <memory>
 #include <string>
 #include <vector>
+#include <chrono>
+#include <ctime>
+#include <time.h>
 #include "mysql.h"
 #include "database.h"
+#include "Storage.h"
 
-
-using namespace std;
 
 
 
 int main()
 {
 	
-	string a = "Watermelow";
+	////string a = "Watermelow";
 
 	database mydata;
 	mydata.connect_db();
-	mydata.add_name_veg(&a);
-	mydata.print_db();
+	mydata.print_vegetable();
+	/*mydata.add_name_veg(&a);*/
+	/*mydata.del_name_veg(&temp);*/
+	/*mydata.auto_increment1();*/
+	string a = "tomate";
+	int b = 10000;
+	Storage one(a, b);
+	mydata.addItem(one);
+	mydata.saveAll();
+	mydata.~database();
+
 	
-	mydata.disconnect();
-
-
 	
-
-
-	
-
-	system("pause");
-	return 0;
-
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"

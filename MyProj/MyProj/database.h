@@ -2,7 +2,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
+
 #include "mysql.h"
+#include "Storage.h"
 
 
 using namespace std;
@@ -19,10 +22,24 @@ public:
 	MYSQL_RES* res;
 
 	
+
 	void connect_db();
-	void print_db();
-	void disconnect();
-	void add_name_veg(string *val);
+	void saveAll();
+	void queryRequest(const string *query);
+	void create_new_table(const Storage &newElement);
+	void print_vegetable();
+	string get_name_veg( int *id);
+	void add_name_veg(const string *val);
+	string del_name_veg( int *id);
+	void auto_increment1();
+	void addItem(const Storage & newElement);
 	~database();
+
+	
+		
+		
+
+	
+
 };
 

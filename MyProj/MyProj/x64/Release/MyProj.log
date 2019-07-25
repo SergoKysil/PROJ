@@ -1,7 +1,7 @@
-﻿  MyProj.cpp
+﻿  database.cpp
   Создание кода
-  42 of 94 functions (44.7%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
+  47 of 175 functions (26.9%) were compiled, the rest were copied from previous compilation.
+    3 functions were new in current compilation
     8 functions had inline decision re-evaluated but remain unchanged
   Создание кода завершено
   MyProj.vcxproj -> C:\Users\User\source\repos\MyProj\x64\Release\MyProj.exe
