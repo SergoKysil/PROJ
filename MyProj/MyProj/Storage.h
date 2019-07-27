@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+
 class Storage
 {
 public:
@@ -13,13 +14,16 @@ public:
 	int get_ID() const;
 	int get_count_prod() const;
 	std::string get_NAME_VEG() const;
-	void set_NAME_VEG(const std::string *NAME_VEG);
-	void set_count_prod(const int *count_prod);
-
+	
+	void set_NAME_VEG(const std::string &NAME_VEG);
+	void set_count_prod(const int &count_prod);
+	void set_ID(const int &ID);
+	
 	~Storage();
 private:
 	std::shared_ptr<int> count_prod;
 	std::shared_ptr<int> ID;
 	std::shared_ptr<std::string> NAME_VEG;
 };
+
 

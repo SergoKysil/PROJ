@@ -1,12 +1,11 @@
 #include "pch.h"
-#include <iostream>
-#include <string>
-
 #include "database.h"
 #include "mysql.h"
 #include "Storage.h"
 
 
+
+//WORK WITH DATABASE
 
 database::database()
 {
@@ -14,11 +13,11 @@ database::database()
 
 void database::connect_db()
 {
-	conn = mysql_init(0);
-	conn = mysql_real_connect(conn, "localhost", "root", "", "Storage", 3306, NULL, 0);
-	if (conn)
+	conn = mysql_init(0);//initialization connect
+	conn = mysql_real_connect(conn, "localhost", "root", "", "Storage", 3306, NULL, 0);//set parametrs of connection
+	if (conn)//if sucñessful connect
 	{
-		puts("Successful connection to database!");
+		puts("Successful connection to database!");//print
 	}
 	else
 	{
@@ -33,37 +32,32 @@ void database::queryRequest(const std::string * quer)
 	mysql_query(conn, q);//query request
 }
 
+void database::saveAll()
+{
+	mysql_commit(conn);//commit changes
+}
+
+database::~database()//CLOSE CONNECTION TO DB
+{
+	delete res;
+	delete conn;
+	mysql_close(conn);
+}
+
+//WORK WITH TABLE VEGETABLE
+
 void database::print_vegetable()
 {
 	std::string query = "SELECT * FROM vegetable;"; //query request
 	queryRequest(&query);//send a request
 	res = mysql_store_result(conn);//get result
-
 	while (row = mysql_fetch_row(res))
 	{
 		printf("%s: %s\n", row[0], row[1]);//print result
 	}
 }
 
-void database::saveAll()
-{
-	mysql_commit(conn);//commit changes
-}
-
-void database::auto_increment1(std::string *tablename)
-{
-	std::string query = "ALTER TABLE vegetable AUTO_INCREMENT = 1;"; //creation query request
-	queryRequest(&query);// send a request
-}
-
-void database::add_name_veg(const std::string *val)
-{
-	std::string temp = (*val);//appropriation variable
-	std::string query = ("INSERT INTO vegetable(NAME_VEG) VALUES('" + temp + "');");//query request
-	queryRequest(&query);// send a request
-}
-
-std::string database::get_name_veg( int *id)
+std::string database::get_name_veg(int *id)
 {
 	auto temp = std::to_string(*id);//convert to string
 	std::string query = "SELECT NAME_VEG FROM vegetable WHERE ID = " + temp + ";"; //creation query request
@@ -75,11 +69,27 @@ std::string database::get_name_veg( int *id)
 	return value; //return result
 }
 
+void database::add_name_veg(const std::string *val)
+{
+	std::string temp = (*val);//appropriation variable
+	std::string query = ("INSERT INTO vegetable(NAME_VEG) VALUES('" + temp + "');");//query request
+	queryRequest(&query);// send a request
+}
+
 void database::del_name_veg( int *id)
 {
-	auto temp = std::to_string(*id);
-	std::string query = "DELETE FROM vegetable WHERE ID = " + temp + ";";
+	auto temp = std::to_string(*id);//convert to string
+	std::string query = "DELETE FROM vegetable WHERE ID = " + temp + ";";//query request
 	queryRequest(&query);
+}
+
+//WORK WITH TABLES
+
+void database::auto_increment1(std::string *tablename)
+{
+	std::string t_tablename = (*tablename);
+	std::string query = "ALTER TABLE " + t_tablename + " AUTO_INCREMENT = 1;"; //creation query request
+	queryRequest(&query);// send a request
 }
 
 void database::create_new_table(const Storage & newElement)
@@ -102,12 +112,12 @@ int database::get_count(const Storage & newElement)
 	std::string value;//value for save
 	row = mysql_fetch_row(res);//assigning to arr
 	value = row[0];// assigning to variable
-	return atoi(value.c_str()); //return result convert to int
+	return 1; /*std::stoi(value);*/ //return result convert to int
 }
 
 void database::changeCount(const Storage & newElement)
 {
-	int t_value = get_count(newElement);
+	int t_value = get_count(newElement);//set result from function
 	if (t_value >= newElement.get_count_prod())
 	{
 		t_value = t_value - newElement.get_count_prod();
@@ -126,15 +136,29 @@ void database::dellBatch(const Storage & newElement)
 	queryRequest(&query);
 }
 
+//FUNCTIONS FOR ARCHIVE
 
-
-
-database::~database()//CLOSE CONNECTION TO DB
+void database::print_all_archive()
 {
-	delete res;
-	delete conn;
-	mysql_close(conn);
+	std::string query = "SELECT * FROM Archive";
+	queryRequest(&query);
 }
+
+void database::AddToArchive(const Storage & newElement)
+{
+	std::string query = "INSERT INTO Archive(NAME_VEG, CountProd, UnloadingDate) VALUES(" + newElement.get_NAME_VEG() + ", " + std::to_string(newElement.get_count_prod()) + ", NOW());";
+	queryRequest(&query);
+}
+
+void database::ClearArchive()
+{
+	std::string query = "TRUNCATE TABLE Archive";
+	queryRequest(&query);
+}
+
+
+
+
 
 
 //CREATE TABLE TableName(

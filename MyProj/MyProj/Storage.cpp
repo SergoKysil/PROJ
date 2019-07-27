@@ -48,14 +48,19 @@ int Storage::get_count_prod() const
 	return *count_prod.get();
 }
 
-void Storage::set_NAME_VEG(const std::string * NAME_VEG)
+void Storage::set_NAME_VEG(const std::string &NAME_VEG)
 {
 	this->NAME_VEG = std::make_shared<std::string>(NAME_VEG);
 }
 
-void Storage::set_count_prod(const int * count_prod)
+void Storage::set_count_prod(const int &count_prod)
 {
 	this->count_prod = std::make_shared<int>(count_prod);
+}
+
+void Storage::set_ID(const int &ID)
+{
+	this->ID = std::make_shared<int>(ID);
 }
 
 Storage::~Storage()
