@@ -6,10 +6,10 @@ class Storage
 {
 public:
 	Storage();
-	explicit Storage(const std::string &NAME_VEG, int &count_prod);
-	explicit Storage(const int &ID, const std::string &NAME_VEG, int &count_prod);
-	explicit Storage(const int &ID, const std::string &NAME_VEG);
-	explicit Storage(const int &ID, const int &count_prod);
+	explicit Storage(const std::string &NAME_VEG,const int &count_prod);
+	explicit Storage(const int &ID, const std::string &NAME_VEG,const int &count_prod);
+	explicit Storage(const int &ID, const std::string &value);
+	explicit Storage(const int &ID, const int & count_prod);
 
 	int get_ID() const;
 	int get_count_prod() const;

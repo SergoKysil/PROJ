@@ -158,11 +158,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="database.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Storage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="database.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MyProj.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

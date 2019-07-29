@@ -51,9 +51,10 @@ void database::print_vegetable()
 	std::string query = "SELECT * FROM vegetable;"; //query request
 	queryRequest(&query);//send a request
 	res = mysql_store_result(conn);//get result
+	std::cout << "ID\tName vegetable" << std::endl;
 	while (row = mysql_fetch_row(res))
 	{
-		printf("%s: %s\n", row[0], row[1]);//print result
+		printf("%s: \t%s\n", row[0], row[1]);//print result
 	}
 }
 
@@ -65,14 +66,13 @@ std::string database::get_name_veg(int *id)
 	res = mysql_store_result(conn);//get result
 	std::string value;//value for save
 	row = mysql_fetch_row(res);//assigning to arr
-	value = row[1];// assigning to variable
+	value = row[0];// assigning to variable
 	return value; //return result
 }
 
 void database::add_name_veg(const std::string *val)
 {
-	std::string temp = (*val);//appropriation variable
-	std::string query = ("INSERT INTO vegetable(NAME_VEG) VALUES('" + temp + "');");//query request
+	std::string query = ("INSERT INTO vegetable(NAME_VEG) VALUES('" + (*val) + "');");//query request
 	queryRequest(&query);// send a request
 }
 
@@ -85,16 +85,30 @@ void database::del_name_veg( int *id)
 
 //WORK WITH TABLES
 
-void database::auto_increment1(std::string *tablename)
+void database::auto_increment1(const std::string *tablename)
 {
-	std::string t_tablename = (*tablename);
-	std::string query = "ALTER TABLE " + t_tablename + " AUTO_INCREMENT = 1;"; //creation query request
+	std::string temp = (*tablename);
+	std::string query = "ALTER TABLE " + temp + " AUTO_INCREMENT = 1;"; //creation query request
 	queryRequest(&query);// send a request
 }
 
-void database::create_new_table(const Storage & newElement)
+void database::print_from_stor_room(const std::string * tablename)
 {
-	std::string query = "CREATE TABLE " + newElement.get_NAME_VEG() + "(ID INT AUTO_INCREMENT PRIMARY KEY, NAME_VEG VARCHAR(20), CountProd INT DEFAULT 0, DeliveryDate DATETIME NOT NULL);";
+	std::string t_name = (*tablename);
+	std::string query = "SELECT * FROM " + t_name + ";";
+	queryRequest(&query);
+	res = mysql_store_result(conn);
+	std::cout << "ID\tName veget\tCount Prod\tDelivery Date" << std::endl;
+	while (row = mysql_fetch_row(res))
+	{
+		printf("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);
+	}
+}
+
+void database::create_new_table(const std::string *val)
+{
+	std::string temp = (*val);
+	std::string query = "CREATE TABLE " + temp + "(ID INT AUTO_INCREMENT PRIMARY KEY, NAME_VEG VARCHAR(20), CountProd INT DEFAULT 0, DeliveryDate DATETIME NOT NULL);";
 	queryRequest(&query);
 }
 
@@ -106,33 +120,36 @@ void database::addBatch(const Storage & newElement)
 
 int database::get_count(const Storage & newElement)
 {
-	std::string query = "SELECT CountProd FROM " + newElement.get_NAME_VEG() + "WHERE ID = " + std::to_string(newElement.get_ID()) + ";";
+	std::string query = "SELECT CountProd FROM " + newElement.get_NAME_VEG() + " WHERE ID = " + std::to_string(newElement.get_ID()) + " LIMIT 1;";
 	queryRequest(&query);
 	res = mysql_store_result(conn);//get result
 	std::string value;//value for save
 	row = mysql_fetch_row(res);//assigning to arr
 	value = row[0];// assigning to variable
-	return 1; /*std::stoi(value);*/ //return result convert to int
+	return std::atoi(value.c_str()); //return result convert to int
 }
 
-void database::changeCount(const Storage & newElement)
+bool database::changeCount(const Storage & newElement)
 {
 	int t_value = get_count(newElement);//set result from function
-	if (t_value >= newElement.get_count_prod())
+	int t_count = newElement.get_count_prod();
+	if (t_value >= t_count)
 	{
-		t_value = t_value - newElement.get_count_prod();
-		std::string query = "UPDATE TABLE " + newElement.get_NAME_VEG() + " SET CountProd = " + std::to_string(t_value) + "WHERE ID = " + std::to_string(newElement.get_ID()) + ";";
+		int next_ti_value = t_value - t_count;
+		std::string query = "UPDATE " + newElement.get_NAME_VEG() + " SET CountProd = " + std::to_string(next_ti_value) + " WHERE ID = " + std::to_string(newElement.get_ID()) + ";";
 		queryRequest(&query);
+		return true;
 	}
 	else
 	{
 		std::cout << "Not enought count in batch of products!" << std::endl;
+		return false;
 	}
 }
 
 void database::dellBatch(const Storage & newElement)
 {
-	std::string query = "DELETE FROM " + newElement.get_NAME_VEG() + " WHERE ID = " + std::to_string(newElement.get_ID()) + ";";
+	std::string query = "DELETE FROM " + newElement.get_NAME_VEG() + " WHERE ID = " + std::to_string(newElement.get_ID());
 	queryRequest(&query);
 }
 
@@ -140,32 +157,36 @@ void database::dellBatch(const Storage & newElement)
 
 void database::print_all_archive()
 {
-	std::string query = "SELECT * FROM Archive";
+	std::string query = "SELECT * FROM Archive;";
 	queryRequest(&query);
+	res = mysql_store_result(conn);//get result
+	std::cout << "ID\tName veget\tCount Prod\tUnloading Date" << std::endl;
+	while (row = mysql_fetch_row(res))
+	{
+		printf("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);//print result
+	}
 }
 
 void database::AddToArchive(const Storage & newElement)
 {
-	std::string query = "INSERT INTO Archive(NAME_VEG, CountProd, UnloadingDate) VALUES(" + newElement.get_NAME_VEG() + ", " + std::to_string(newElement.get_count_prod()) + ", NOW());";
+	std::string query = "INSERT INTO Archive(NAME_VEG, CountProd, UnloadingDate) VALUES('" + newElement.get_NAME_VEG() + "'," +std::to_string(newElement.get_count_prod()) + ", NOW())";
 	queryRequest(&query);
 }
 
 void database::ClearArchive()
 {
-	std::string query = "TRUNCATE TABLE Archive";
+	std::string query = "TRUNCATE TABLE Archive;";
 	queryRequest(&query);
 }
 
 
 
 
-
-
-//CREATE TABLE TableName(
+//CREATE TABLE Archive(
 //	ID INT AUTO_INCREMENT PRIMARY KEY,
 //  NAME_VEG VARCHAR(20),
 //	CountProd INT DEFAULT 0,
-//	DeliveryDate DATETIME NOT NULL
+//	UnloadingDate DATETIME NOT NULL
 //	);
 
 

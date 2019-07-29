@@ -6,24 +6,34 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include <chrono>
-#include <ctime>
-#include <time.h>
 #include "mysql.h"
 #include "database.h"
 #include "Storage.h"
-
+#include "Menu.h"
 
 
 
 int main()
 {
+
+	database DB;
+	DB.connect_db();
+	Menu menu;
+
+	//menu.print_menu();
+	//menu.show_list_of_vegetable(DB);
+	//menu.add_a_new_type_of_vegetables(DB);
+	//menu.download_a_batch_of_vegetable(DB);
+	//menu.unload_a_batch_of_product(DB);
+	//menu.unload_a_portion_of_the_batch(DB);
+	//menu.print_all_archive(DB);
+	//menu.clear_archive(DB);
+	menu.exit_prog(DB);
 	
-	////string a = "Watermelow";
 
 	
 	
-	
+	return 0;
 }
 
 // Run the program: CTRL + F5 or the Debug menu> Run without debugging

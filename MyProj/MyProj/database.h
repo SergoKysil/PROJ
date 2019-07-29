@@ -40,15 +40,17 @@ public:
 
 	//WORK WITH TABLES FOR SAVE PRODUCT
 
-	void auto_increment1(std::string * tablename);
+	void auto_increment1(const std::string * tablename);
+
+	void print_from_stor_room(const std::string * tablename);
 	
-	void create_new_table(const Storage &newElement);
+	void create_new_table(const std::string * val);
 
 	void addBatch(const Storage & newElement);
 
 	int get_count(const Storage & newElement);
 
-	void changeCount(const Storage & newElement);
+	bool changeCount(const Storage & newElement);
 
 	void dellBatch(const Storage & newElement);
 	
