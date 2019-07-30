@@ -4,7 +4,7 @@
 #include "mysql.h"
 #include "database.h"
 #include "Storage.h"
-#include "database.h"
+#include "Password.h"
 
 
 class Menu
@@ -12,9 +12,7 @@ class Menu
 public:
 	Menu();
 
-	explicit Menu(const int & password);
-
-	int get_password() const;
+	~Menu();
 
 	void print_menu();
 	
@@ -30,13 +28,16 @@ public:
 	
 	void print_all_archive(database &db);
 	
-	void clear_archive(database &db);
-	
 	void exit_prog(database &db);
-	
-	~Menu();
 
-private:
-	std::shared_ptr<int> password;
+	//functions for password
+
+	void del_veget(database & db, Password & pass);
+
+	void clear_archive(database &db, Password & pass);
+
+	void change_password(database & db, Password & pass);
+	
+
 };
 

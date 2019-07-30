@@ -111,12 +111,12 @@ bool database::check_ID_veg(const int * id)
 
 //WORK WITH TABLES
 
-void database::auto_increment1(const std::string *tablename)
-{
-	std::string temp = (*tablename);
-	std::string query = "ALTER TABLE " + temp + " AUTO_INCREMENT = 1;"; //creation query request
-	queryRequest(&query);// send a request
-}
+//void database::auto_increment1(const std::string *tablename)
+//{
+//	std::string temp = (*tablename);
+//	std::string query = "ALTER TABLE " + temp + " AUTO_INCREMENT = 1;"; //creation query request
+//	queryRequest(&query);// send a request
+//}
 
 bool database::print_from_stor_room(const std::string * tablename)
 {
@@ -140,10 +140,10 @@ bool database::print_from_stor_room(const std::string * tablename)
 	}
 }
 
-void database::create_new_table(const std::string *val)
+void database::create_new_table(const std::string *tablename)
 {
-	std::string temp = (*val);
-	std::string query = "CREATE TABLE " + temp + "(ID INT AUTO_INCREMENT PRIMARY KEY, NAME_VEG VARCHAR(20), CountProd INT DEFAULT 0, DeliveryDate DATETIME NOT NULL);";
+	std::string t_name = (*tablename);
+	std::string query = "CREATE TABLE " + t_name + "(ID INT AUTO_INCREMENT PRIMARY KEY, NAME_VEG VARCHAR(20), CountProd INT DEFAULT 0, DeliveryDate DATETIME NOT NULL);";
 	queryRequest(&query);
 }
 
@@ -206,17 +206,33 @@ bool database::check_ID(const int * ID, const std::string * name_veg)
 	return false;
 }
 
+void database::drop_table(const std::string *tablename)
+{
+	std::string t_name = (*tablename);
+	std::string query = "DROP TABLE " + t_name + ";";
+	queryRequest(&query);
+}
+
 //FUNCTIONS FOR ARCHIVE
 
-void database::print_all_archive()
+bool database::print_all_archive()
 {
 	std::string query = "SELECT * FROM Archive;";
 	queryRequest(&query);
 	res = mysql_store_result(conn);//get result
-	std::cout << "ID\tName veget\tCount Prod\tUnloading Date" << std::endl;
-	while (row = mysql_fetch_row(res))
+	int num = mysql_num_rows(res);
+	if (num > 0)
 	{
-		printf("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);//print result
+		std::cout << "ID\tName veget\tCount Prod\tUnloading Date" << std::endl;
+		while (row = mysql_fetch_row(res))
+		{
+			printf("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);//print result
+		}
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
@@ -230,4 +246,22 @@ void database::ClearArchive()
 {
 	std::string query = "TRUNCATE TABLE Archive;";
 	queryRequest(&query);
+}
+
+//FUNCTIONS FOR PASSWORD
+
+std::string database::get_password()
+{
+	std::string query = "SELECT Password FROM password;";
+	queryRequest(&query);
+	res = mysql_store_result(conn);
+	row = mysql_fetch_row(res);
+	std::string password = row[0];
+	return password;
+}
+
+void database::change_password(const std::string * password)
+{
+	std::string new_password = (*password);
+	std::string query = "UPDATE password SET Password = " + new_password + ";";
 }

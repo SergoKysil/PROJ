@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-
 #include "mysql.h"
 #include "Storage.h"
 
@@ -28,6 +27,8 @@ public:
 
 	void saveAll();
 
+	~database();
+
 	//WORK WITH TABLE VEGETABLE
 	
 	bool print_vegetable();
@@ -42,7 +43,7 @@ public:
 
 	//WORK WITH TABLES FOR SAVE PRODUCT
 
-	void auto_increment1(const std::string * tablename);
+	//void auto_increment1(const std::string * tablename);
 
 	bool print_from_stor_room(const std::string * tablename);
 	
@@ -58,15 +59,21 @@ public:
 	
 	bool check_ID(const int * ID, const std::string * name_veg);
 
+	void drop_table(const std::string *tablename);
+
 	//FUNCTIONS FOR ARCHIVE
 
-	void print_all_archive();
+	bool print_all_archive();
 
 	void AddToArchive(const Storage & newElement);
 
 	void ClearArchive();
 	
-	~database();
+	//FUNCTIONS FOR PASSWORD
+
+	std::string get_password();
+
+	void change_password(const std::string * password);
 
 
 };

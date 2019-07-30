@@ -7,14 +7,8 @@ Menu::Menu()
 {
 }
 
-Menu::Menu(const int & password)
+Menu::~Menu()
 {
-	this->password = std::make_shared<int>(password);
-}
-
-int Menu::get_password() const
-{
-	return *password.get();
 }
 
 void Menu::print_menu()
@@ -181,12 +175,12 @@ void Menu::unload_a_portion_of_the_batch(database & db)
 
 void Menu::print_all_archive(database & db)
 {
-	db.print_all_archive();
-}
-
-void Menu::clear_archive(database & db)
-{
-	db.ClearArchive();
+	if (db.print_all_archive())
+	{ }
+	else
+	{
+		std::cout << "Archive is clear!" << std::endl;
+	}
 }
 
 void Menu::exit_prog(database &db)
@@ -195,6 +189,58 @@ void Menu::exit_prog(database &db)
 	exit(0);
 }
 
-Menu::~Menu()
+//functions for password
+
+void Menu::del_veget(database & db, Password & pass)
 {
+	if (pass.password_verification(db))
+	{
+		if (db.print_vegetable())
+		{
+			std::cout << "\nChoose which product you want to delete: ";
+			int choise;
+			std::cin >> choise;
+			if (db.check_ID_veg(&choise))
+			{
+				std::string name_veg = db.get_name_veg(&choise);
+				db.del_name_veg(&choise);
+				db.drop_table(&name_veg);
+			}
+			else
+			{
+				std::cout << "There is no product under this ID!" << std::endl;
+			}
+
+		}
+		else
+		{
+			std::cout << "There is no vegetable!" << std::endl;
+		}
+	}
+	else
+	{
+		printf("Invalid password!");
+	}
 }
+
+void Menu::clear_archive(database & db, Password & pass)
+{
+	if (pass.password_verification(db))
+	{
+		db.ClearArchive();
+	}
+	else
+	{
+		printf("Invalid password");
+	}
+}
+
+void Menu::change_password(database & db, Password & pass)
+{
+	pass.change_password(db);
+}
+
+
+
+
+

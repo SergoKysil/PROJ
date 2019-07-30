@@ -10,6 +10,7 @@
 #include "database.h"
 #include "Storage.h"
 #include "Menu.h"
+#include "Password.h"
 
 
 
