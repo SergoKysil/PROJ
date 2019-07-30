@@ -16,7 +16,6 @@
 
 int main()
 {
-
 	database DB;
 	DB.connect_db();
 	Menu menu;
@@ -29,7 +28,10 @@ int main()
 	//menu.unload_a_portion_of_the_batch(DB);
 	//menu.print_all_archive(DB);
 	//menu.clear_archive(DB);
+	
+	//menu.clear_archive(DB);
 	//menu.exit_prog(DB);
+	
 	
 
 	

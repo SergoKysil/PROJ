@@ -32,11 +32,11 @@ public:
 
 	//functions for password
 
-	void del_veget(database & db, Password & pass);
+	void del_veget(database & db);
 
-	void clear_archive(database &db, Password & pass);
+	void clear_archive(database &db);
 
-	void change_password(database & db, Password & pass);
+	void change_password(database & db);
 	
 
 };

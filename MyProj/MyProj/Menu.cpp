@@ -191,8 +191,9 @@ void Menu::exit_prog(database &db)
 
 //functions for password
 
-void Menu::del_veget(database & db, Password & pass)
+void Menu::del_veget(database & db)
 {
+	Password pass;
 	if (pass.password_verification(db))
 	{
 		if (db.print_vegetable())
@@ -223,8 +224,9 @@ void Menu::del_veget(database & db, Password & pass)
 	}
 }
 
-void Menu::clear_archive(database & db, Password & pass)
+void Menu::clear_archive(database & db)
 {
+	Password pass;
 	if (pass.password_verification(db))
 	{
 		db.ClearArchive();
@@ -235,8 +237,9 @@ void Menu::clear_archive(database & db, Password & pass)
 	}
 }
 
-void Menu::change_password(database & db, Password & pass)
+void Menu::change_password(database & db)
 {
+	Password pass;
 	pass.change_password(db);
 }
 

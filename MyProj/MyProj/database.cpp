@@ -252,16 +252,16 @@ void database::ClearArchive()
 
 std::string database::get_password()
 {
-	std::string query = "SELECT Password FROM password;";
+	std::string query = "SELECT Password FROM password WHERE ID = 1 LIMIT 1;";
 	queryRequest(&query);
 	res = mysql_store_result(conn);
 	row = mysql_fetch_row(res);
-	std::string password = row[0];
-	return password;
+	std::string passwo = row[0];
+	return passwo;
 }
 
 void database::change_password(const std::string * password)
 {
 	std::string new_password = (*password);
-	std::string query = "UPDATE password SET Password = " + new_password + ";";
+	std::string query = "UPDATE password SET Password = '" + new_password + "';";
 }
