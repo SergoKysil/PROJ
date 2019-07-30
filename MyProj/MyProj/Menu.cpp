@@ -7,6 +7,16 @@ Menu::Menu()
 {
 }
 
+Menu::Menu(const int & password)
+{
+	this->password = std::make_shared<int>(password);
+}
+
+int Menu::get_password() const
+{
+	return *password.get();
+}
+
 void Menu::print_menu()
 {
 	std::string text = "===Select one of the menu items!===\n\n\
@@ -23,7 +33,13 @@ void Menu::print_menu()
 
 void Menu::show_list_of_vegetable(database & db)
 {
-	db.print_vegetable();
+	if (db.print_vegetable())
+	{ }
+	else
+	{
+		std::cout << "There is no vegetable!" << std::endl;
+
+	}
 }
 
 void Menu::add_a_new_type_of_vegetables(database & db)
@@ -37,61 +53,129 @@ void Menu::add_a_new_type_of_vegetables(database & db)
 
 void Menu::download_a_batch_of_vegetable(database & db)
 {
-	db.print_vegetable();
-	std::cout << "\nChoose which product you want to download: ";
-	int choise;
-	std::cin >> choise;
-	const std::string name_veg = db.get_name_veg(&choise);
-	std::cout << "Enter the quantity of products: ";
-	int count;
-	std::cin >> count;
-	Storage temp(name_veg, count);
-	db.addBatch(temp);
+	if (db.print_vegetable())
+	{
+		std::cout << "\nChoose which product you want to download: ";
+		int choise;
+		std::cin >> choise;
+		if (db.check_ID_veg(&choise))
+		{
+			const std::string name_veg = db.get_name_veg(&choise);
+			std::cout << "Enter the quantity of products: ";
+			int count;
+			std::cin >> count;
+			Storage temp(name_veg, count);
+			db.addBatch(temp);
+		}
+		else
+		{
+			std::cout << "There is no such ID!" << std::endl;
+		}
+	}
+	else
+	{
+		std::cout << "There is no vegetable!" << std::endl;
+	}
 }
 
 void Menu::unload_a_batch_of_product(database & db)
 {
-	db.print_vegetable();
-	std::cout << "\nChoose which product you want to unload: ";
-	int choise;
-	std::cin >> choise;
-	system("cls");
-	const std::string name_veg = db.get_name_veg(&choise);
-	db.print_from_stor_room(&name_veg);
-	std::cout << "Select the batch you want to unload: ";
-	int choise_batch;
-	std::cin >> choise_batch;
-	Storage temp(choise_batch, name_veg);
-	int count = db.get_count(temp);
-	Storage temp1(choise_batch, name_veg, count);
-	db.AddToArchive(temp1);
-	db.dellBatch(temp);
+	if (db.print_vegetable())
+	{
+		std::cout << "\nChoose which product you want to unload: ";
+		int choise;
+		std::cin >> choise;
+		if (db.check_ID_veg(&choise))
+		{
+			system("cls");
+			const std::string name_veg = db.get_name_veg(&choise);
+			if (db.print_from_stor_room(&name_veg))
+			{
+				std::cout << "Select the batch you want to unload: ";
+				int choise_batch;
+				std::cin >> choise_batch;
+				if (db.check_ID(&choise_batch, &name_veg))
+				{
+					Storage temp(choise_batch, name_veg);
+					int count = db.get_count(temp);
+					Storage temp1(choise_batch, name_veg, count);
+					db.AddToArchive(temp1);
+					db.dellBatch(temp);
+				}
+				else
+				{
+					std::cout << "There is no such party!" << std::endl;
+				}
+			}
+			else
+			{
+				std::cout << "Storage is empty!" << std::endl;
+			}
+		}
+		else
+		{
+			std::cout << "There is no such ID!" << std::endl;
+		}
+	}
+	else
+	{
+		std::cout << "There is no vegetable!" << std::endl;
+
+	}
 }
 
 void Menu::unload_a_portion_of_the_batch(database & db)
 {
-	db.print_vegetable();
-	std::cout << "\nChoose which product you want to unload: ";
-	int choise;
-	std::cin >> choise;
-	system("cls");
-	const std::string name_veg = db.get_name_veg(&choise);
-	db.print_from_stor_room(&name_veg);
-	std::cout << "Select the portion of the batch you want to unload: ";
-	int choise_batch;
-	std::cin >> choise_batch;
-	std::cout << "Enter count: ";
-	int count;
-	std::cin >> count;
-	Storage temp(choise_batch, name_veg, count);
-	Storage temp1(name_veg, count);
-	if (db.changeCount(temp) == true)
+	if (db.print_vegetable())
 	{
-		db.AddToArchive(temp1);
+		std::cout << "\nChoose which product you want to unload: ";
+		int choise;
+		std::cin >> choise;
+		if (db.check_ID_veg(&choise))
+		{
+			system("cls");
+			const std::string name_veg = db.get_name_veg(&choise);
+			if (db.print_from_stor_room(&name_veg))
+			{
+				std::cout << "Select the portion of the batch you want to unload: ";
+				int choise_batch;
+				std::cin >> choise_batch;
+				if (db.check_ID(&choise_batch, &name_veg))
+				{
+					std::cout << "Enter count: ";
+					int count;
+					std::cin >> count;
+					Storage temp(choise_batch, name_veg, count);
+					Storage temp1(name_veg, count);
+					if (db.changeCount(temp) == true)
+					{
+						db.AddToArchive(temp1);
+					}
+					else
+					{
+						printf("There are not so many products in the lot\n");
+					}
+				}
+				else
+				{
+					std::cout << "Storage is empty!" << std::endl;
+
+				}
+			}
+			else
+			{
+				std::cout << "There is no such party!" << std::endl;
+			}
+		}
+		else
+		{
+			std::cout << "There is no such ID!" << std::endl;
+		}
 	}
 	else
 	{
-		printf("Operation has failed\n");
+		std::cout << "There is no vegetable!" << std::endl;
+
 	}
 }
 

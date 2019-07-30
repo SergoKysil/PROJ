@@ -46,19 +46,28 @@ database::~database()//CLOSE CONNECTION TO DB
 
 //WORK WITH TABLE VEGETABLE
 
-void database::print_vegetable()
+bool database::print_vegetable()
 {
 	std::string query = "SELECT * FROM vegetable;"; //query request
 	queryRequest(&query);//send a request
 	res = mysql_store_result(conn);//get result
-	std::cout << "ID\tName vegetable" << std::endl;
-	while (row = mysql_fetch_row(res))
+	int num = mysql_num_rows(res);
+	if (num > 0)
 	{
-		printf("%s: \t%s\n", row[0], row[1]);//print result
+		std::cout << "ID\tName vegetable" << std::endl;
+		while (row = mysql_fetch_row(res))
+		{
+			printf("%s: \t%s\n", row[0], row[1]);//print result
+		}
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
-std::string database::get_name_veg(int *id)
+std::string database::get_name_veg(const int *id)
 {
 	auto temp = std::to_string(*id);//convert to string
 	std::string query = "SELECT NAME_VEG FROM vegetable WHERE ID = " + temp + ";"; //creation query request
@@ -76,11 +85,28 @@ void database::add_name_veg(const std::string *val)
 	queryRequest(&query);// send a request
 }
 
-void database::del_name_veg( int *id)
+void database::del_name_veg(const int *id)
 {
 	auto temp = std::to_string(*id);//convert to string
 	std::string query = "DELETE FROM vegetable WHERE ID = " + temp + ";";//query request
 	queryRequest(&query);
+}
+
+bool database::check_ID_veg(const int * id)
+{
+	int ID = (*id);
+	std::string query = "SELECT ID FROM vegetable;";
+	queryRequest(&query);
+	res = mysql_store_result(conn);
+	row = mysql_fetch_row(res);
+	while (row = mysql_fetch_row(res))
+	{
+		if (std::to_string(ID) == row[0])
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 //WORK WITH TABLES
@@ -92,16 +118,25 @@ void database::auto_increment1(const std::string *tablename)
 	queryRequest(&query);// send a request
 }
 
-void database::print_from_stor_room(const std::string * tablename)
+bool database::print_from_stor_room(const std::string * tablename)
 {
 	std::string t_name = (*tablename);
 	std::string query = "SELECT * FROM " + t_name + ";";
 	queryRequest(&query);
 	res = mysql_store_result(conn);
-	std::cout << "ID\tName veget\tCount Prod\tDelivery Date" << std::endl;
-	while (row = mysql_fetch_row(res))
+	int num = mysql_num_rows(res);
+	if (num > 0)
 	{
-		printf("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);
+		std::cout << "ID\tName veget\tCount Prod\tDelivery Date" << std::endl;
+		while (row = mysql_fetch_row(res))
+		{
+			printf("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);
+		}
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
@@ -153,6 +188,24 @@ void database::dellBatch(const Storage & newElement)
 	queryRequest(&query);
 }
 
+bool database::check_ID(const int * ID, const std::string * name_veg)
+{
+	std::string t_name = (*name_veg);
+	int id = (*ID);
+	std::string query = "SELECT ID FROM " + t_name + ";";
+	queryRequest(&query);
+	res = mysql_store_result(conn);
+	row = mysql_fetch_row(res);
+	while (row = mysql_fetch_row(res))
+	{
+		if (std::to_string(id) == row[0])
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 //FUNCTIONS FOR ARCHIVE
 
 void database::print_all_archive()
@@ -178,17 +231,3 @@ void database::ClearArchive()
 	std::string query = "TRUNCATE TABLE Archive;";
 	queryRequest(&query);
 }
-
-
-
-
-//CREATE TABLE Archive(
-//	ID INT AUTO_INCREMENT PRIMARY KEY,
-//  NAME_VEG VARCHAR(20),
-//	CountProd INT DEFAULT 0,
-//	UnloadingDate DATETIME NOT NULL
-//	);
-
-
-
-//string query = "INSERT INTO tomate(NAME_VEG, CountProd, DeliveryDate) VALUES('tomate', 20000, NOW())";

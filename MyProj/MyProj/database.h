@@ -30,19 +30,21 @@ public:
 
 	//WORK WITH TABLE VEGETABLE
 	
-	void print_vegetable();
+	bool print_vegetable();
 	
-	std::string get_name_veg( int * id);
+	std::string get_name_veg(const int * id);
 	
 	void add_name_veg(const std::string * val);
 	
-	void del_name_veg( int *id);
+	void del_name_veg(const int *id);
+
+	bool check_ID_veg(const int * id);
 
 	//WORK WITH TABLES FOR SAVE PRODUCT
 
 	void auto_increment1(const std::string * tablename);
 
-	void print_from_stor_room(const std::string * tablename);
+	bool print_from_stor_room(const std::string * tablename);
 	
 	void create_new_table(const std::string * val);
 
@@ -54,6 +56,8 @@ public:
 
 	void dellBatch(const Storage & newElement);
 	
+	bool check_ID(const int * ID, const std::string * name_veg);
+
 	//FUNCTIONS FOR ARCHIVE
 
 	void print_all_archive();
