@@ -1,7 +1,8 @@
-﻿  MyProj.cpp
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: промежуточный каталог (x64\Release\) содержит файлы, которые используются совместно с другим проектом (MyProj.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  PAmain.cpp
   Создание кода
-  75 of 148 functions (50.7%) were compiled, the rest were copied from previous compilation.
-    6 functions were new in current compilation
-    8 functions had inline decision re-evaluated but remain unchanged
+  1 of 20 functions ( 5.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Создание кода завершено
-  MyProj.vcxproj -> C:\Users\User\source\repos\MyProj\x64\Release\MyProj.exe
+  MyProj.vcxproj -> C:\Users\User\source\repos\MyProj\x64\Release\PA.exe

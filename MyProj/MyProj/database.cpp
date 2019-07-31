@@ -111,13 +111,6 @@ bool database::check_ID_veg(const int * id)
 
 //WORK WITH TABLES
 
-//void database::auto_increment1(const std::string *tablename)
-//{
-//	std::string temp = (*tablename);
-//	std::string query = "ALTER TABLE " + temp + " AUTO_INCREMENT = 1;"; //creation query request
-//	queryRequest(&query);// send a request
-//}
-
 bool database::print_from_stor_room(const std::string * tablename)
 {
 	std::string t_name = (*tablename);
@@ -263,5 +256,16 @@ std::string database::get_password()
 void database::change_password(const std::string * password)
 {
 	std::string new_password = (*password);
-	std::string query = "UPDATE password SET Password = '" + new_password + "';";
+	std::string query = "UPDATE password SET Password = " + new_password + " WHERE ID = 1;";
+	queryRequest(&query);
 }
+
+
+//Experemental function
+//Not for use
+//void database::auto_increment1(const std::string *tablename)
+//{
+//	std::string temp = (*tablename);
+//	std::string query = "ALTER TABLE " + temp + " AUTO_INCREMENT = 1;"; //creation query request
+//	queryRequest(&query);// send a request
+//}

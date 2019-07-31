@@ -30,12 +30,12 @@
     <ClInclude Include="Password.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="Info.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="MyProj.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="database.cpp">
@@ -48,6 +48,12 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Password.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Info.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="PAmain.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

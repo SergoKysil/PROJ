@@ -12,6 +12,7 @@ public:
 	Password();
 
 	bool password_verification(database & db);
+	
 	void change_password(database & db);
 
 	~Password();

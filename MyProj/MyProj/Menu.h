@@ -16,7 +16,23 @@ public:
 
 	void print_menu();
 	
+	void print_closed_function();
+
+	void print_min_menu();
+
+	void print_min_menu2();
+
+	void print_min_menux();
+
+	void choise_min_menu( bool * case_x);
+
+	void choise_min_menu2(bool * case_x);
+
+	void choise_min_menux(bool * case_x, bool * menux);
+
 	void show_list_of_vegetable(database & db);
+	
+	void print_from_room(database & db);
 	
 	void add_a_new_type_of_vegetables(database & db);
 	

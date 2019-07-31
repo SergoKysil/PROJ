@@ -15,14 +15,137 @@ void Menu::print_menu()
 {
 	std::string text = "===Select one of the menu items!===\n\n\
 1. Show a list of vegetables\n\
-2. Add a new type of vegetables\n\
-3. Unload a batch of vegetables\n\
-4. Unload a portion of the batch of vegetables\n\
-5. Download a batch of vegetables\n\
-6. View archive\n\
-7. Clear archive\n\
-0. Exit\n";
+2. View the contents of one of the repositories\n\
+3. Add a new type of vegetables\n\
+4. Unload a batch of vegetables\n\
+5. Unload a portion of the batch of vegetables\n\
+6. Download a batch of vegetables\n\
+7. View archive\n\
+8. View closed function\n\
+0. Exit";
 	std::cout << text << std::endl;
+}
+
+void Menu::print_closed_function()
+{
+	std::string text = "1. Delete information about a particular vegetable\n\
+2. Clear the archive\n\
+3. Change password\n\\n\
+0. Return to the main menu";
+	std::cout << text << std::endl;
+}
+
+void Menu::print_min_menu()
+{
+	std::string text = "1. Return to the main menu\n\
+2. Continue performing this function\n\
+0. Exit";
+	std::cout << text << std::endl;
+}
+
+void Menu::print_min_menu2()
+{
+	std::string text = "1. Return to the main function\n\
+0. Exit\n";
+	std::cout << text;
+}
+
+void Menu::print_min_menux()
+{
+	std::string text = "1. Return to the main function\n\
+2. Return to the menu closed function\n\
+0. Exit\n";
+	std::cout << text;
+}
+
+void Menu::choise_min_menu(bool * case_x)
+{
+	int choise_case;
+	std::cout << "\nYour choise: ";
+	std::cin >> choise_case;
+	bool back = true;
+	while (back)
+	{
+		if ((choise_case) == 1)
+		{
+			system("cls");
+			back = false;
+			(*case_x) = false;
+		}
+		else if ((choise_case) == 2)
+		{
+			system("cls");
+			back = false;
+		}
+		else if ((choise_case) == 0)
+		{
+			exit(0);
+		}
+		else
+		{
+			printf("Invalid choise!\n");
+			back = true;
+		}
+	}
+}
+
+void Menu::choise_min_menu2(bool * case_x)
+{
+	int choise_case;
+	std::cout << "\nYour choise: ";
+	std::cin >> choise_case;
+	bool back = true;
+	while (back)
+	{
+		if (choise_case == 1)
+		{
+			system("cls");
+			back = false;
+			(*case_x) = false;	
+		}
+		else if (choise_case == 0)
+		{
+			exit(0);
+		}
+		else
+		{
+			printf("Invalid choise!\n");
+			back = true;
+		}
+	}
+}
+
+void Menu::choise_min_menux(bool * case_x, bool * menux)
+{
+	int choise_case;
+	std::cout << "\nYour choise: ";
+	std::cin >> choise_case;
+	bool back = true;
+	while (back)
+	{
+		if (choise_case == 1)
+		{
+			system("cls");
+			back = false;
+			(*case_x) = false;
+			(*menux) = false;
+		}
+		else if (choise_case == 2)
+		{
+			system("cls");
+			back = false;
+			(*case_x) = false;
+		}
+		else if (choise_case == 0)
+		{
+			exit(0);
+		}
+		else
+		{
+			printf("Invalid choise!\n");
+			back = true;
+		}
+	}
 }
 
 void Menu::show_list_of_vegetable(database & db)
@@ -33,6 +156,36 @@ void Menu::show_list_of_vegetable(database & db)
 	{
 		std::cout << "There is no vegetable!" << std::endl;
 
+	}
+}
+
+void Menu::print_from_room(database & db)
+{
+	if (db.print_vegetable())
+	{
+		std::cout << "\nChoose which product you want to see: ";
+		int choise;
+		std::cin >> choise;
+		if (db.check_ID_veg(&choise))
+		{
+			system("cls");
+			const std::string name_veg = db.get_name_veg(&choise);
+			if (db.print_from_stor_room(&name_veg))
+			{
+			}
+			else
+			{
+				std::cout << "Storage is empty!" << std::endl;
+			}
+		}
+		else
+		{
+			std::cout << "There is no such ID!" << std::endl;
+		}
+	}
+	else
+	{
+	std::cout << "There is no vegetable!" << std::endl;
 	}
 }
 
