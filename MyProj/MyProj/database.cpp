@@ -11,17 +11,19 @@ database::database()
 {
 }
 
-void database::connect_db()
+bool database::connect_db()
 {
 	conn = mysql_init(0);//initialization connect
 	conn = mysql_real_connect(conn, "localhost", "root", "", "Storage", 3306, NULL, 0);//set parametrs of connection
 	if (conn)//if sucñessful connect
 	{
 		puts("Successful connection to database!");//print
+		return true;
 	}
 	else
 	{
 		puts("Connection to database has failed!");
+		return false;
 	}
 }
 
@@ -95,10 +97,9 @@ void database::del_name_veg(const int *id)
 bool database::check_ID_veg(const int * id)
 {
 	int ID = (*id);
-	std::string query = "SELECT ID FROM vegetable;";
+	std::string query = "SELECT ID FROM vegetable";
 	queryRequest(&query);
 	res = mysql_store_result(conn);
-	row = mysql_fetch_row(res);
 	while (row = mysql_fetch_row(res))
 	{
 		if (std::to_string(ID) == row[0])
@@ -107,6 +108,7 @@ bool database::check_ID_veg(const int * id)
 		}
 	}
 	return false;
+	
 }
 
 //WORK WITH TABLES
@@ -188,7 +190,6 @@ bool database::check_ID(const int * ID, const std::string * name_veg)
 	std::string query = "SELECT ID FROM " + t_name + ";";
 	queryRequest(&query);
 	res = mysql_store_result(conn);
-	row = mysql_fetch_row(res);
 	while (row = mysql_fetch_row(res))
 	{
 		if (std::to_string(id) == row[0])

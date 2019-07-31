@@ -22,7 +22,7 @@ void Menu::print_menu()
 6. Download a batch of vegetables\n\
 7. View archive\n\
 8. View closed function\n\
-0. Exit";
+0. Exit\n";
 	std::cout << text << std::endl;
 }
 
@@ -30,29 +30,30 @@ void Menu::print_closed_function()
 {
 	std::string text = "1. Delete information about a particular vegetable\n\
 2. Clear the archive\n\
-3. Change password\n\\n\
-0. Return to the main menu";
+3. Change password\n\n\
+4. Return to the main menu\n\
+0. Exit\n";
 	std::cout << text << std::endl;
 }
 
 void Menu::print_min_menu()
 {
-	std::string text = "1. Return to the main menu\n\
+	std::string text = "\n1. Return to the main menu\n\
 2. Continue performing this function\n\
-0. Exit";
+0. Exit\n";
 	std::cout << text << std::endl;
 }
 
 void Menu::print_min_menu2()
 {
-	std::string text = "1. Return to the main function\n\
+	std::string text = "\n1. Return to the main menu\n\
 0. Exit\n";
 	std::cout << text;
 }
 
 void Menu::print_min_menux()
 {
-	std::string text = "1. Return to the main function\n\
+	std::string text = "\n1. Return to the main function\n\
 2. Return to the menu closed function\n\
 0. Exit\n";
 	std::cout << text;
@@ -83,7 +84,7 @@ void Menu::choise_min_menu(bool * case_x)
 		}
 		else
 		{
-			printf("Invalid choise!\n");
+			printf("\nInvalid choise!\n");
 			back = true;
 		}
 	}
@@ -109,7 +110,7 @@ void Menu::choise_min_menu2(bool * case_x)
 		}
 		else
 		{
-			printf("Invalid choise!\n");
+			printf("\nInvalid choise!\n");
 			back = true;
 		}
 	}
@@ -142,7 +143,7 @@ void Menu::choise_min_menux(bool * case_x, bool * menux)
 		}
 		else
 		{
-			printf("Invalid choise!\n");
+			printf("\nInvalid choise!\n");
 			back = true;
 		}
 	}
@@ -305,13 +306,12 @@ void Menu::unload_a_portion_of_the_batch(database & db)
 				}
 				else
 				{
-					std::cout << "Storage is empty!" << std::endl;
-
+					std::cout << "There is no such party!" << std::endl;
 				}
 			}
 			else
 			{
-				std::cout << "There is no such party!" << std::endl;
+				std::cout << "Storage is empty!" << std::endl;	
 			}
 		}
 		else

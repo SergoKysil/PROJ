@@ -17,172 +17,189 @@
 int main()
 {
 	database DB;
-	DB.connect_db();
+	
 	Menu menu;
-	Sleep(2000);
-	system("cls");
-	bool menu_choise = true;
-	while (menu_choise)
+	if (DB.connect_db())
 	{
+		Sleep(1000);
 		system("cls");
-		menu.print_menu();
-		int choise;
-		std::cout << "Your choise: ";
-		std::cin >> choise;
-		switch (choise)
+		bool menu_choise = true;
+		while (menu_choise)
 		{
-		case 1:
-		{
-			bool case1 = true;
-			while (case1)
+			system("cls");
+			menu.print_menu();
+			int choise;
+			std::cout << "Your choise: ";
+			std::cin >> choise;
+			system("cls");
+			switch (choise)
 			{
-				menu.show_list_of_vegetable(DB);
-				menu.print_min_menux();
-				menu.choise_min_menu2(&case1);
-			}
-		}
-		break;
-
-		case 2:
-		{
-			bool case2 = true;
-			while (case2)
+			case 1:
 			{
-				menu.print_from_room(DB);
-				menu.print_min_menu();
-				menu.choise_min_menu(&case2);
-			}
-		}
-		break;
-
-		case 3:
-		{
-			bool case3 = true;
-			while (case3)
-			{
-				menu.add_a_new_type_of_vegetables(DB);
-				menu.print_min_menu();
-				menu.choise_min_menu(&case3);	
-			}
-		}
-		break;
-
-		case 4:
-		{
-			bool case4 = true;
-			while (case4)
-			{
-				menu.unload_a_batch_of_product(DB);
-				menu.print_min_menu();
-				menu.choise_min_menu(&case4);
-			}
-		}
-		break;
-
-		case 5:
-		{
-			bool case5 = true;
-			while (case5)
-			{
-				menu.unload_a_portion_of_the_batch(DB);
-				menu.print_min_menu();
-				menu.choise_min_menu( &case5);
-			}
-		}
-		break;
-
-		case 6:
-		{
-			bool case6 = true;
-			while (case6)
-			{
-				menu.download_a_batch_of_vegetable(DB);
-				menu.print_min_menu();
-				menu.choise_min_menu(&case6);
-			}
-		}
-		break;
-
-		case 7:
-		{
-			bool case7 = true;
-			while (case7)
-			{
-				menu.print_all_archive(DB);
-				menu.print_min_menux();
-				menu.choise_min_menu2(&case7);
-			}
-		}
-		break;
-
-		case 8:
-		{
-			bool menu_close_func = true;
-			while(menu_close_func)
-			{
-				menu.print_closed_function();
-				int choise_close_func;
-				std::cout << "Your choise: ";
-				std::cin >> choise_close_func;
-				switch (choise_close_func)
+				bool case1 = true;
+				while (case1)
 				{
-				case 1:
-				{
-					bool casex1 = true;
-					while (casex1)
-					{
-						menu.del_veget(DB);
-						menu.print_min_menux();
-						menu.choise_min_menux(&casex1, &menu_close_func);
-					}
-				}
-				break;
-
-				case 2:
-				{
-					bool casex2 = true;
-					while (casex2)
-					{
-						menu.clear_archive(DB);
-						menu.print_min_menux();
-						menu.choise_min_menux(&casex2, &menu_close_func);
-					}
-				}
-				break;
-
-				case 3:
-				{
-					bool casex3 = true;
-					while (casex3)
-					{
-						menu.change_password(DB);
-						menu.print_min_menux();
-						menu.choise_min_menux(&casex3, &menu_close_func);
-					}
-				}
-				break;
-
-				default: printf("Invalid choise!");
-					break;
+					menu.show_list_of_vegetable(DB);
+					menu.print_min_menu2();
+					menu.choise_min_menu2(&case1);
 				}
 			}
-		}
-		break;
-
-		case 0: exit(0);
 			break;
 
-		default:
-		{
-			system("cls");
-			std::cout << "Invalid input!!!" << std::endl;
-			Sleep(2000);
-			system("cls");
-		}
-		break;
+			case 2:
+			{
+				bool case2 = true;
+				while (case2)
+				{
+					menu.print_from_room(DB);
+					menu.print_min_menu();
+					menu.choise_min_menu(&case2);
+				}
+			}
+			break;
+
+			case 3:
+			{
+				bool case3 = true;
+				while (case3)
+				{
+					menu.add_a_new_type_of_vegetables(DB);
+					menu.print_min_menu();
+					menu.choise_min_menu(&case3);
+				}
+			}
+			break;
+
+			case 4:
+			{
+				bool case4 = true;
+				while (case4)
+				{
+					menu.unload_a_batch_of_product(DB);
+					menu.print_min_menu();
+					menu.choise_min_menu(&case4);
+				}
+			}
+			break;
+
+			case 5:
+			{
+				bool case5 = true;
+				while (case5)
+				{
+					menu.unload_a_portion_of_the_batch(DB);
+					menu.print_min_menu();
+					menu.choise_min_menu(&case5);
+				}
+			}
+			break;
+
+			case 6:
+			{
+				bool case6 = true;
+				while (case6)
+				{
+					menu.download_a_batch_of_vegetable(DB);
+					menu.print_min_menu();
+					menu.choise_min_menu(&case6);
+				}
+			}
+			break;
+
+			case 7:
+			{
+				bool case7 = true;
+				while (case7)
+				{
+					menu.print_all_archive(DB);
+					menu.print_min_menu2();
+					menu.choise_min_menu2(&case7);
+				}
+			}
+			break;
+
+			case 8:
+			{
+				bool menu_close_func = true;
+				while (menu_close_func)
+				{
+					menu.print_closed_function();
+					int choise_close_func;
+					std::cout << "Your choise: ";
+					std::cin >> choise_close_func;
+					switch (choise_close_func)
+					{
+					case 1:
+					{
+						bool casex1 = true;
+						while (casex1)
+						{
+							menu.del_veget(DB);
+							menu.print_min_menux();
+							menu.choise_min_menux(&casex1, &menu_close_func);
+						}
+					}
+					break;
+
+					case 2:
+					{
+						bool casex2 = true;
+						while (casex2)
+						{
+							menu.clear_archive(DB);
+							menu.print_min_menux();
+							menu.choise_min_menux(&casex2, &menu_close_func);
+						}
+					}
+					break;
+
+					case 3:
+					{
+						bool casex3 = true;
+						while (casex3)
+						{
+							menu.change_password(DB);
+							menu.print_min_menux();
+							menu.choise_min_menux(&casex3, &menu_close_func);
+						}
+					}
+					break;
+
+					case 4:
+					{
+						menu_close_func = false;
+					}
+					break;
+
+					case 0: exit(0);
+						break;
+
+					default: printf("\nInvalid choise!\n");
+						break;
+					}
+				}
+			}
+			break;
+
+			case 0: exit(0);
+				break;
+
+			default:
+			{
+				system("cls");
+				std::cout << "\nInvalid input!!!\n" << std::endl;
+				Sleep(1000);
+				system("cls");
+			}
+			break;
+			}
 		}
 	}
+	else
+	{
+	Sleep(2000);
 	return 0;
+	}
 }
 
 // Run the program: CTRL + F5 or the Debug menu> Run without debugging

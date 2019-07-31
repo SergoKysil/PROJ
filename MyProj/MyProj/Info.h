@@ -4,6 +4,9 @@ class Info
 public:
 	Info();
 	//PRODUCT ACCOUNTING
+
+
+	//===============SOON==================
 	~Info();
 };
 

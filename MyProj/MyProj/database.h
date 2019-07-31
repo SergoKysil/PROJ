@@ -21,7 +21,7 @@ public:
 
 	//WORK WITH DATABASE
 
-	void connect_db();
+	bool connect_db();
 	
 	void queryRequest(const std::string *query);
 
@@ -42,8 +42,6 @@ public:
 	bool check_ID_veg(const int * id);
 
 	//WORK WITH TABLES FOR SAVE PRODUCT
-
-	//void auto_increment1(const std::string * tablename);
 
 	bool print_from_stor_room(const std::string * tablename);
 	
@@ -75,6 +73,7 @@ public:
 
 	void change_password(const std::string * password);
 
+	//void auto_increment1(const std::string * tablename);
 
 };
 
