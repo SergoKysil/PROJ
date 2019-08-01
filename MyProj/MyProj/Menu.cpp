@@ -22,6 +22,7 @@ void Menu::print_menu()
 6. Download a batch of vegetables\n\
 7. View archive\n\
 8. View closed function\n\
+9. Reference\n\
 0. Exit\n";
 	std::cout << text << std::endl;
 }
@@ -32,6 +33,15 @@ void Menu::print_closed_function()
 2. Clear the archive\n\
 3. Change password\n\n\
 4. Return to the main menu\n\
+0. Exit\n";
+	std::cout << text << std::endl;
+}
+
+void Menu::print_refer_menu()
+{
+	std::string text = "1. Help for use\n\
+2. About program\n\n\
+3. Return to the main menu\n\
 0. Exit\n";
 	std::cout << text << std::endl;
 }
@@ -54,7 +64,7 @@ void Menu::print_min_menu2()
 void Menu::print_min_menux()
 {
 	std::string text = "\n1. Return to the main function\n\
-2. Return to the menu closed function\n\
+2. Stay in this menu\n\
 0. Exit\n";
 	std::cout << text;
 }
@@ -334,6 +344,18 @@ void Menu::print_all_archive(database & db)
 	{
 		std::cout << "Archive is clear!" << std::endl;
 	}
+}
+
+void Menu::print_Help()
+{
+	Info help;
+	help.Help_for_use();
+}
+
+void Menu::print_about_prog()
+{
+	Info about;
+	about.About_the_program();
 }
 
 void Menu::exit_prog(database &db)

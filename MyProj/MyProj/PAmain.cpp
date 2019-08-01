@@ -181,6 +181,56 @@ int main()
 			}
 			break;
 
+			case 9:
+			{
+				bool menu_refer = true;
+				while (menu_refer)
+				{
+					menu.print_refer_menu();
+					int choise_ref;
+					std::cout << "Your choise: ";
+					std::cin >> choise_ref;
+					switch (choise_ref)
+					{
+					case 1:
+					{
+						bool case1 = true;
+						while (case1)
+						{
+							menu.print_Help();
+							menu.print_min_menux();
+							menu.choise_min_menux(&case1, &menu_refer);
+						}
+					}
+					break;
+
+					case 2:
+					{
+						bool case2 = true;
+						while (case2)
+						{
+							menu.print_about_prog();
+							menu.print_min_menux();
+							menu.choise_min_menux(&case2, &menu_refer);
+						}
+					}
+					break;
+
+					case 3:
+					{
+						menu_refer = false;
+					}
+					break;
+
+					case 0: exit(0);
+						break;
+
+					default: printf("\nInvalid choise!\n");
+						break;
+					}
+				}
+			}
+
 			case 0: exit(0);
 				break;
 

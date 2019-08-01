@@ -5,6 +5,7 @@
 #include "database.h"
 #include "Storage.h"
 #include "Password.h"
+#include "Info.h"
 
 
 class Menu
@@ -17,6 +18,8 @@ public:
 	void print_menu();
 	
 	void print_closed_function();
+
+	void print_refer_menu();
 
 	void print_min_menu();
 
@@ -43,6 +46,10 @@ public:
 	void unload_a_portion_of_the_batch(database &db);
 	
 	void print_all_archive(database &db);
+
+	void print_Help();
+
+	void print_about_prog();
 	
 	void exit_prog(database &db);
 
