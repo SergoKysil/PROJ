@@ -4,7 +4,7 @@
 #include "mysql.h"
 #include "database.h"
 #include "Storage.h"
-#include "Menu.h"
+#include "FuncForMenu.h"
 
 class Password
 {

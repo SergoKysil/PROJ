@@ -207,6 +207,8 @@ void database::drop_table(const std::string *tablename)
 	queryRequest(&query);
 }
 
+
+
 //FUNCTIONS FOR ARCHIVE
 
 bool database::print_all_archive()

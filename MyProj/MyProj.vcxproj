@@ -160,7 +160,7 @@
   <ItemGroup>
     <ClInclude Include="database.h" />
     <ClInclude Include="Info.h" />
-    <ClInclude Include="Menu.h" />
+    <ClInclude Include="FuncForMenu.h" />
     <ClInclude Include="Password.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Storage.h" />
@@ -168,8 +168,8 @@
   <ItemGroup>
     <ClCompile Include="database.cpp" />
     <ClCompile Include="Info.cpp" />
-    <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="PAmain.cpp" />
+    <ClCompile Include="FuncForMenu.cpp" />
+    <ClCompile Include="PAmainMenu.cpp" />
     <ClCompile Include="Password.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
