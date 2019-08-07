@@ -18,12 +18,11 @@
 int main()
 {
 
-	FuncForData work("Storage");
+	FuncForData work("Storage", "localhost", "root", "");
 
 	FuncForMenu menu;
 	if (menu.connectdb(work))
 	{
-		
 		system("cls");
 		bool menu_choise = true;
 		while (menu_choise)
@@ -249,7 +248,6 @@ int main()
 	}
 	else
 	{
-	Sleep(2000);
 	return 0;
 	}
 }

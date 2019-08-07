@@ -12,19 +12,17 @@
 class FuncForData : public DataManage
 {
 public:
-	explicit FuncForData(const std::string &dataBaseName);
-
-	//
-	
-	
+	explicit FuncForData(const std::string &dataBaseName, const std::string & host, const std::string & user, const std::string & password);
 
 	//WORK WITH DATABASE
 
-	bool connect_db(const std::string &host, const std::string &user, const std::string &password);
+	bool connect_db();
 	
 	void queryRequest(const std::string &query);
 
 	void queryRequestRes(const std::string &query);
+
+	bool checkForEmpty();
 
 	~FuncForData();
 

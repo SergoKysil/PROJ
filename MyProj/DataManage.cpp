@@ -2,16 +2,19 @@
 #include "DataManage.h"
 
 
-DataManage::DataManage(const std::string &databasename)
+DataManage::DataManage(const std::string &databasename, const std::string & host, const std::string & user, const std::string & password)
 {
 	this->dataBaseName = std::make_shared<std::string>(databasename);
+	this->host = std::make_shared<std::string>(host);
+	this->user = std::make_shared<std::string>(user);
+	this->password = std::make_shared<std::string>(password);
 }
 
-bool DataManage::connect_db(const std::string &host, const std::string &user, const std::string &password)
+bool DataManage::connect_db()
 {
-	const char*h = host.c_str();
-	const char*u = user.c_str();
-	const char*p = password.c_str();
+	const char*h = this->host.get()->c_str();
+	const char*u = this->user.get()->c_str();
+	const char*p = this->password.get()->c_str();
 	const char*n = this->dataBaseName.get()->c_str();
 	conn = mysql_init(NULL);//initialization connect
 	conn = mysql_real_connect(conn, h, u, p, n, 3306, NULL, 0);//set parametrs of connection
@@ -20,8 +23,7 @@ bool DataManage::connect_db(const std::string &host, const std::string &user, co
 		std::cout << "Successful connection to database!" << std::endl;//print
 		return true;
 	}
-	else
-	{
+	else{
 		std::cout << "Connection to database has failed!" << std::endl;
 		return false;
 	}

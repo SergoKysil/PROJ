@@ -8,12 +8,12 @@
 
 //WORK WITH DATABASE
 
-FuncForData::FuncForData(const std::string &dataBaseName):DataManage (dataBaseName)
+FuncForData::FuncForData(const std::string &dataBaseName, const std::string & host, const std::string & user, const std::string & password):DataManage (dataBaseName, host, user, password )
 {}
 
-bool FuncForData::connect_db(const std::string &host, const std::string &user, const std::string &password)
+bool FuncForData::connect_db()
 {
-	return DataManage::connect_db(host, user, password);
+	return DataManage::connect_db();
 }
 
 void FuncForData::queryRequest(const std::string & quer)
@@ -29,6 +29,13 @@ void FuncForData::queryRequestRes(const std::string & query)
 	res = mysql_store_result(conn);//get result
 }
 
+bool FuncForData::checkForEmpty()
+{
+	int rows = mysql_num_rows(res);
+	if (rows > 0) return true;
+	else return false;
+}
+
 FuncForData::~FuncForData()//CLOSE CONNECTION TO DB
 {
 	delete res;
@@ -42,20 +49,13 @@ bool FuncForData::print_vegetable()
 {
 	std::string query = "SELECT * FROM vegetable;"; //query request
 	queryRequestRes(query);
-	int num = mysql_num_rows(res);
-	if (num > 0)
-	{
+	if (checkForEmpty()){
 		std::cout << "ID\tName vegetable" << std::endl;
 		while (row = mysql_fetch_row(res))
-		{
-			printf("%s: \t%s\n", row[0], row[1]);//print result
-		}
+			std::cout << ("%s: \t%s\n", row[0], row[1]) << std::endl;//print result
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
 
 std::string FuncForData::get_name_veg(const int &id)
@@ -88,12 +88,7 @@ bool FuncForData::check_ID_veg(const int & id)
 	std::string query = "SELECT ID FROM vegetable";
 	queryRequestRes(query);
 	while (row = mysql_fetch_row(res))
-	{
-		if (std::to_string(ID) == row[0])
-		{
-			return true;
-		}
-	}
+		if (std::to_string(ID) == row[0]) return true;
 	return false;
 }
 
@@ -104,20 +99,13 @@ bool FuncForData::print_from_stor_room(const std::string & tablename)
 	std::string t_name = tablename;
 	std::string query = "SELECT * FROM " + t_name + ";";
 	queryRequestRes(query);
-	int num = mysql_num_rows(res);
-	if (num > 0)
-	{
+	if (checkForEmpty()){
 		std::cout << "ID\tName veget\tCount Prod\tDelivery Date" << std::endl;
 		while (row = mysql_fetch_row(res))
-		{
-			printf("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);
-		}
+			std::cout << ("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
 
 void FuncForData::create_new_table(const std::string &tablename)
@@ -147,15 +135,13 @@ bool FuncForData::changeCount(const Storage & newElement)
 {
 	int t_value = get_count(newElement);//set result from function
 	int t_count = newElement.get_count_prod();
-	if (t_value >= t_count)
-	{
+	if (t_value >= t_count){
 		int next_ti_value = t_value - t_count;
 		std::string query = "UPDATE " + newElement.get_NAME_VEG() + " SET CountProd = " + std::to_string(next_ti_value) + " WHERE ID = " + std::to_string(newElement.get_ID()) + ";";
 		queryRequest(query);
 		return true;
 	}
-	else
-	{
+	else{
 		std::cout << "Not enought count in batch of products!" << std::endl;
 		return false;
 	}
@@ -174,12 +160,8 @@ bool FuncForData::check_ID(const int & ID, const std::string & name_veg)
 	std::string query = "SELECT ID FROM " + t_name + ";";
 	queryRequestRes(query);
 	while (row = mysql_fetch_row(res))
-	{
 		if (std::to_string(id) == row[0])
-		{
 			return true;
-		}
-	}
 	return false;
 }
 
@@ -190,28 +172,20 @@ void FuncForData::drop_table(const std::string &tablename)
 	queryRequest(query);
 }
 
-
-
 //FUNCTIONS FOR ARCHIVE
 
 bool FuncForData::print_all_archive()
 {
 	std::string query = "SELECT * FROM Archive;";
 	queryRequestRes(query);
-	int num = mysql_num_rows(res);
-	if (num > 0)
+	if (checkForEmpty())
 	{
 		std::cout << "ID\tName veget\tCount Prod\tUnloading Date" << std::endl;
 		while (row = mysql_fetch_row(res))
-		{
-			printf("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);//print result
-		}
+			std::cout << ("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);//print result
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
 
 void FuncForData::AddToArchive(const Storage & newElement)

@@ -9,14 +9,17 @@
 class DataManage
 {
 public:
-	DataManage(const std::string & databasename);
+	DataManage(const std::string & databasename, const std::string & host, const std::string & user, const std::string & password);
 
-	bool connect_db(const std::string &host, const std::string &user, const std::string &password);
+	bool connect_db();
 
 	void saveAll();
 
 private:
 	std::shared_ptr<std::string> dataBaseName;
+	std::shared_ptr<std::string> host;
+	std::shared_ptr<std::string> user;
+	std::shared_ptr<std::string> password;
 
 protected:
 	MYSQL* conn;
