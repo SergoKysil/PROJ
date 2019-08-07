@@ -1,45 +1,35 @@
 #include "pch.h"
-#include "database.h"
+#include "FuncForData.h"
 #include "mysql.h"
 #include "Storage.h"
+#include "DataManage.h"
 
 
 
 //WORK WITH DATABASE
 
-database::database()
+FuncForData::FuncForData(const std::string &dataBaseName):DataManage (dataBaseName)
+{}
+
+bool FuncForData::connect_db(const std::string &host, const std::string &user, const std::string &password)
 {
+	return DataManage::connect_db(host, user, password);
 }
 
-bool database::connect_db()
+void FuncForData::queryRequest(const std::string & quer)
 {
-	conn = mysql_init(0);//initialization connect
-	conn = mysql_real_connect(conn, "localhost", "root", "", "Storage", 3306, NULL, 0);//set parametrs of connection
-	if (conn)//if sucñessful connect
-	{
-		puts("Successful connection to database!");//print
-		return true;
-	}
-	else
-	{
-		puts("Connection to database has failed!");
-		return false;
-	}
-}
-
-void database::queryRequest(const std::string * quer)
-{
-	std::string query = *quer;//appropriation variable
+	std::string query = quer;//appropriation variable
 	const char* q = query.c_str();//convert to const char
 	mysql_query(conn, q);//query request
 }
 
-void database::saveAll()
+void FuncForData::queryRequestRes(const std::string & query)
 {
-	mysql_commit(conn);//commit changes
+	queryRequest(query);//send a request
+	res = mysql_store_result(conn);//get result
 }
 
-database::~database()//CLOSE CONNECTION TO DB
+FuncForData::~FuncForData()//CLOSE CONNECTION TO DB
 {
 	delete res;
 	delete conn;
@@ -48,11 +38,10 @@ database::~database()//CLOSE CONNECTION TO DB
 
 //WORK WITH TABLE VEGETABLE
 
-bool database::print_vegetable()
+bool FuncForData::print_vegetable()
 {
 	std::string query = "SELECT * FROM vegetable;"; //query request
-	queryRequest(&query);//send a request
-	res = mysql_store_result(conn);//get result
+	queryRequestRes(query);
 	int num = mysql_num_rows(res);
 	if (num > 0)
 	{
@@ -69,37 +58,35 @@ bool database::print_vegetable()
 	}
 }
 
-std::string database::get_name_veg(const int *id)
+std::string FuncForData::get_name_veg(const int &id)
 {
-	auto temp = std::to_string(*id);//convert to string
+	auto temp = std::to_string(id);//convert to string
 	std::string query = "SELECT NAME_VEG FROM vegetable WHERE ID = " + temp + ";"; //creation query request
-	queryRequest(&query);//call function for query request
-	res = mysql_store_result(conn);//get result
+	queryRequestRes(query);
 	std::string value;//value for save
 	row = mysql_fetch_row(res);//assigning to arr
 	value = row[0];// assigning to variable
 	return value; //return result
 }
 
-void database::add_name_veg(const std::string *val)
+void FuncForData::add_name_veg(const std::string &val)
 {
-	std::string query = ("INSERT INTO vegetable(NAME_VEG) VALUES('" + (*val) + "');");//query request
-	queryRequest(&query);// send a request
+	std::string query = ("INSERT INTO vegetable(NAME_VEG) VALUES('" + val + "');");//query request
+	queryRequest(query);// send a request
 }
 
-void database::del_name_veg(const int *id)
+void FuncForData::del_name_veg(const int &id)
 {
-	auto temp = std::to_string(*id);//convert to string
+	auto temp = std::to_string(id);//convert to string
 	std::string query = "DELETE FROM vegetable WHERE ID = " + temp + ";";//query request
-	queryRequest(&query);
+	queryRequest(query);
 }
 
-bool database::check_ID_veg(const int * id)
+bool FuncForData::check_ID_veg(const int & id)
 {
-	int ID = (*id);
+	int ID = id;
 	std::string query = "SELECT ID FROM vegetable";
-	queryRequest(&query);
-	res = mysql_store_result(conn);
+	queryRequestRes(query);
 	while (row = mysql_fetch_row(res))
 	{
 		if (std::to_string(ID) == row[0])
@@ -108,17 +95,15 @@ bool database::check_ID_veg(const int * id)
 		}
 	}
 	return false;
-	
 }
 
 //WORK WITH TABLES
 
-bool database::print_from_stor_room(const std::string * tablename)
+bool FuncForData::print_from_stor_room(const std::string & tablename)
 {
-	std::string t_name = (*tablename);
+	std::string t_name = tablename;
 	std::string query = "SELECT * FROM " + t_name + ";";
-	queryRequest(&query);
-	res = mysql_store_result(conn);
+	queryRequestRes(query);
 	int num = mysql_num_rows(res);
 	if (num > 0)
 	{
@@ -135,31 +120,30 @@ bool database::print_from_stor_room(const std::string * tablename)
 	}
 }
 
-void database::create_new_table(const std::string *tablename)
+void FuncForData::create_new_table(const std::string &tablename)
 {
-	std::string t_name = (*tablename);
+	std::string t_name = tablename;
 	std::string query = "CREATE TABLE " + t_name + "(ID INT AUTO_INCREMENT PRIMARY KEY, NAME_VEG VARCHAR(20), CountProd INT DEFAULT 0, DeliveryDate DATETIME NOT NULL);";
-	queryRequest(&query);
+	queryRequest(query);
 }
 
-void database::addBatch(const Storage & newElement)
+void FuncForData::addBatch(const Storage & newElement)
 {
 	std::string query = "INSERT INTO " + newElement.get_NAME_VEG() + "(NAME_VEG, CountProd, DeliveryDate) VALUES('" + newElement.get_NAME_VEG() + "', " + std::to_string(newElement.get_count_prod()) + ", NOW());";
-	queryRequest(&query);
+	queryRequest(query);
 }
 
-int database::get_count(const Storage & newElement)
+int FuncForData::get_count(const Storage & newElement)
 {
 	std::string query = "SELECT CountProd FROM " + newElement.get_NAME_VEG() + " WHERE ID = " + std::to_string(newElement.get_ID()) + " LIMIT 1;";
-	queryRequest(&query);
-	res = mysql_store_result(conn);//get result
+	queryRequestRes(query);
 	std::string value;//value for save
 	row = mysql_fetch_row(res);//assigning to arr
 	value = row[0];// assigning to variable
 	return std::atoi(value.c_str()); //return result convert to int
 }
 
-bool database::changeCount(const Storage & newElement)
+bool FuncForData::changeCount(const Storage & newElement)
 {
 	int t_value = get_count(newElement);//set result from function
 	int t_count = newElement.get_count_prod();
@@ -167,7 +151,7 @@ bool database::changeCount(const Storage & newElement)
 	{
 		int next_ti_value = t_value - t_count;
 		std::string query = "UPDATE " + newElement.get_NAME_VEG() + " SET CountProd = " + std::to_string(next_ti_value) + " WHERE ID = " + std::to_string(newElement.get_ID()) + ";";
-		queryRequest(&query);
+		queryRequest(query);
 		return true;
 	}
 	else
@@ -177,19 +161,18 @@ bool database::changeCount(const Storage & newElement)
 	}
 }
 
-void database::dellBatch(const Storage & newElement)
+void FuncForData::dellBatch(const Storage & newElement)
 {
 	std::string query = "DELETE FROM " + newElement.get_NAME_VEG() + " WHERE ID = " + std::to_string(newElement.get_ID());
-	queryRequest(&query);
+	queryRequest(query);
 }
 
-bool database::check_ID(const int * ID, const std::string * name_veg)
+bool FuncForData::check_ID(const int & ID, const std::string & name_veg)
 {
-	std::string t_name = (*name_veg);
-	int id = (*ID);
+	std::string t_name = name_veg;
+	int id = ID;
 	std::string query = "SELECT ID FROM " + t_name + ";";
-	queryRequest(&query);
-	res = mysql_store_result(conn);
+	queryRequestRes(query);
 	while (row = mysql_fetch_row(res))
 	{
 		if (std::to_string(id) == row[0])
@@ -200,22 +183,21 @@ bool database::check_ID(const int * ID, const std::string * name_veg)
 	return false;
 }
 
-void database::drop_table(const std::string *tablename)
+void FuncForData::drop_table(const std::string &tablename)
 {
-	std::string t_name = (*tablename);
+	std::string t_name = tablename;
 	std::string query = "DROP TABLE " + t_name + ";";
-	queryRequest(&query);
+	queryRequest(query);
 }
 
 
 
 //FUNCTIONS FOR ARCHIVE
 
-bool database::print_all_archive()
+bool FuncForData::print_all_archive()
 {
 	std::string query = "SELECT * FROM Archive;";
-	queryRequest(&query);
-	res = mysql_store_result(conn);//get result
+	queryRequestRes(query);
 	int num = mysql_num_rows(res);
 	if (num > 0)
 	{
@@ -232,35 +214,34 @@ bool database::print_all_archive()
 	}
 }
 
-void database::AddToArchive(const Storage & newElement)
+void FuncForData::AddToArchive(const Storage & newElement)
 {
 	std::string query = "INSERT INTO Archive(NAME_VEG, CountProd, UnloadingDate) VALUES('" + newElement.get_NAME_VEG() + "'," +std::to_string(newElement.get_count_prod()) + ", NOW())";
-	queryRequest(&query);
+	queryRequest(query);
 }
 
-void database::ClearArchive()
+void FuncForData::ClearArchive()
 {
 	std::string query = "TRUNCATE TABLE Archive;";
-	queryRequest(&query);
+	queryRequest(query);
 }
 
 //FUNCTIONS FOR PASSWORD
 
-std::string database::get_password()
+std::string FuncForData::get_password()
 {
 	std::string query = "SELECT Password FROM password WHERE ID = 1 LIMIT 1;";
-	queryRequest(&query);
-	res = mysql_store_result(conn);
+	queryRequestRes(query);
 	row = mysql_fetch_row(res);
 	std::string passwo = row[0];
 	return passwo;
 }
 
-void database::change_password(const std::string * password)
+void FuncForData::change_password(const std::string & password)
 {
-	std::string new_password = (*password);
+	std::string new_password = password;
 	std::string query = "UPDATE password SET Password = " + new_password + " WHERE ID = 1;";
-	queryRequest(&query);
+	queryRequest(query);
 }
 
 

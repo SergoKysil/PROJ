@@ -7,7 +7,8 @@
 #include <string>
 #include <vector>
 #include "mysql.h"
-#include "database.h"
+#include "DataManage.h"
+#include "FuncForData.h"
 #include "Storage.h"
 #include "FuncForMenu.h"
 #include "Password.h"
@@ -16,8 +17,11 @@
 
 int main()
 {
+
+	FuncForData work("Storage");
+
 	FuncForMenu menu;
-	if (menu.connectdb())
+	if (menu.connectdb(work))
 	{
 		
 		system("cls");
@@ -37,7 +41,7 @@ int main()
 				bool case1 = true;
 				while (case1)
 				{
-					menu.show_list_of_vegetable();
+					menu.show_list_of_vegetable(work);
 					menu.print_min_menu2();
 					menu.choise_min_menu2(&case1);
 				}
@@ -49,7 +53,7 @@ int main()
 				bool case2 = true;
 				while (case2)
 				{
-					menu.print_from_room();
+					menu.print_from_room(work);
 					menu.print_min_menu();
 					menu.choise_min_menu(&case2);
 				}
@@ -61,7 +65,7 @@ int main()
 				bool case3 = true;
 				while (case3)
 				{
-					menu.add_a_new_type_of_vegetables();
+					menu.add_a_new_type_of_vegetables(work);
 					menu.print_min_menu();
 					menu.choise_min_menu(&case3);
 				}
@@ -73,7 +77,7 @@ int main()
 				bool case4 = true;
 				while (case4)
 				{
-					menu.unload_a_batch_of_product();
+					menu.unload_a_batch_of_product(work);
 					menu.print_min_menu();
 					menu.choise_min_menu(&case4);
 				}
@@ -85,7 +89,7 @@ int main()
 				bool case5 = true;
 				while (case5)
 				{
-					menu.unload_a_portion_of_the_batch();
+					menu.unload_a_portion_of_the_batch(work);
 					menu.print_min_menu();
 					menu.choise_min_menu(&case5);
 				}
@@ -97,7 +101,7 @@ int main()
 				bool case6 = true;
 				while (case6)
 				{
-					menu.download_a_batch_of_vegetable();
+					menu.download_a_batch_of_vegetable(work);
 					menu.print_min_menu();
 					menu.choise_min_menu(&case6);
 				}
@@ -109,7 +113,7 @@ int main()
 				bool case7 = true;
 				while (case7)
 				{
-					menu.print_all_archive();
+					menu.print_all_archive(work);
 					menu.print_min_menu2();
 					menu.choise_min_menu2(&case7);
 				}
@@ -132,7 +136,7 @@ int main()
 						bool casex1 = true;
 						while (casex1)
 						{
-							menu.del_veget();
+							menu.del_veget(work);
 							menu.print_min_menux();
 							menu.choise_min_menux(&casex1, &menu_close_func);
 						}
@@ -144,7 +148,7 @@ int main()
 						bool casex2 = true;
 						while (casex2)
 						{
-							menu.clear_archive();
+							menu.clear_archive(work);
 							menu.print_min_menux();
 							menu.choise_min_menux(&casex2, &menu_close_func);
 						}
@@ -156,7 +160,7 @@ int main()
 						bool casex3 = true;
 						while (casex3)
 						{
-							menu.change_password();
+							menu.change_password(work);
 							menu.print_min_menux();
 							menu.choise_min_menux(&casex3, &menu_close_func);
 						}

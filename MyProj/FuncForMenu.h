@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include "mysql.h"
-#include "database.h"
+#include "FuncForData.h"
 #include "Storage.h"
 #include "Password.h"
 #include "Info.h"
@@ -11,11 +11,8 @@
 class FuncForMenu
 {
 public:
-	FuncForMenu();
 
-	~FuncForMenu();
-
-	bool connectdb();
+	bool connectdb(FuncForData & work);
 
 	void print_menu();
 	
@@ -35,33 +32,33 @@ public:
 
 	void choise_min_menux(bool * case_x, bool * menux);
 
-	void show_list_of_vegetable();
+	void show_list_of_vegetable(FuncForData & work);
 	
-	void print_from_room();
+	void print_from_room(FuncForData & work);
 	
-	void add_a_new_type_of_vegetables();
+	void add_a_new_type_of_vegetables(FuncForData & work);
 	
-	void download_a_batch_of_vegetable();
+	void download_a_batch_of_vegetable(FuncForData & work);
 	
-	void unload_a_batch_of_product();
+	void unload_a_batch_of_product(FuncForData & work);
 	
-	void unload_a_portion_of_the_batch();
+	void unload_a_portion_of_the_batch(FuncForData & work);
 	
-	void print_all_archive();
+	void print_all_archive(FuncForData & work);
 
 	void print_Help();
 
 	void print_about_prog();
 	
-	void exit_prog();
+	void exit_prog(FuncForData & work);
 
 	//functions for password
 
-	void del_veget();
+	void del_veget(FuncForData & work);
 
-	void clear_archive();
+	void clear_archive(FuncForData & work);
 
-	void change_password();
+	void change_password(FuncForData & work);
 	
 
 };

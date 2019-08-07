@@ -1,14 +1,7 @@
-﻿  database.cpp
-c:\users\user\source\repos\myproj\myproj\database.cpp(56): warning C4244: инициализация: преобразование "my_ulonglong" в "int", возможна потеря данных
-c:\users\user\source\repos\myproj\myproj\database.cpp(122): warning C4244: инициализация: преобразование "my_ulonglong" в "int", возможна потеря данных
-c:\users\user\source\repos\myproj\myproj\database.cpp(219): warning C4244: инициализация: преобразование "my_ulonglong" в "int", возможна потеря данных
-  Info.cpp
-  FuncForMenu.cpp
-  PAmainMenu.cpp
-  Password.cpp
+﻿  FuncForMenu.cpp
   Создание кода
-  79 of 292 functions (27.1%) were compiled, the rest were copied from previous compilation.
-    26 functions were new in current compilation
-    32 functions had inline decision re-evaluated but remain unchanged
+  202 of 290 functions (69.7%) were compiled, the rest were copied from previous compilation.
+    40 functions were new in current compilation
+    29 functions had inline decision re-evaluated but remain unchanged
   Создание кода завершено
   MyProj.vcxproj -> C:\Users\User\source\repos\MyProj\x64\Release\PA.exe

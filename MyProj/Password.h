@@ -2,19 +2,13 @@
 #include <iostream>
 #include <string>
 #include "mysql.h"
-#include "database.h"
-#include "Storage.h"
-#include "FuncForMenu.h"
+#include "FuncForData.h"
 
 class Password
 {
 public:
-	Password();
-
-	bool password_verification(database & db);
+	bool password_verification(FuncForData & work);
 	
-	void change_password(database & db);
-
-	~Password();
+	void change_password(FuncForData & work);
 };
 
