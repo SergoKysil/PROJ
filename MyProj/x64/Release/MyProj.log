@@ -1,7 +1,7 @@
-﻿  PAmainMenu.cpp
+﻿  Main.cpp
   Создание кода
-  1 of 291 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+  2 of 257 functions ( 0.8%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Создание кода завершено
-  MyProj.vcxproj -> C:\Users\User\source\repos\MyProj\x64\Release\PA.exe
+  MyProj.vcxproj -> D:\Project\PROJ\x64\Release\PA.exe

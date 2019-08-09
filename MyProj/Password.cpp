@@ -2,7 +2,7 @@
 #include "Password.h"
 
 
-bool Password::password_verification(FuncForData & work)
+bool Password::password_verification(DataBase & work)
 {
 	std::cout << "Enter password: ";
 	std::string entered_pass;
@@ -11,7 +11,7 @@ bool Password::password_verification(FuncForData & work)
 	return (entered_pass == current_pass);
 }
 
-void Password::change_password(FuncForData & work)
+void Password::change_password(DataBase & work)
 {
 	std::cout << "Enter your old password: ";
 	std::string entered_password;

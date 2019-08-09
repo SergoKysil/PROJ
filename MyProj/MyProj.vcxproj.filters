@@ -18,9 +18,6 @@
     <ClInclude Include="pch.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Storage.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Password.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -30,18 +27,15 @@
     <ClInclude Include="FuncForMenu.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="DataManage.h">
+    <ClInclude Include="DataBase.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="FuncForData.h">
+    <ClInclude Include="ExecProgram.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Storage.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Password.cpp">
@@ -53,13 +47,13 @@
     <ClCompile Include="FuncForMenu.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="PAmainMenu.cpp">
+    <ClCompile Include="DataBase.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="DataManage.cpp">
+    <ClCompile Include="Main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="FuncForData.cpp">
+    <ClCompile Include="ExecProgram.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

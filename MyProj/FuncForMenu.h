@@ -2,63 +2,37 @@
 #include <iostream>
 #include <string>
 #include "mysql.h"
-#include "FuncForData.h"
-#include "Storage.h"
 #include "Password.h"
-#include "Info.h"
+#include "DataBase.h"
 
 
 class FuncForMenu
 {
 public:
 
-	bool connectdb(FuncForData & work);
-
 	void print_menu();
 	
-	void print_closed_function();
+	void print_menu_for_closed_function();
 
-	void print_refer_menu();
+	void print_info_menu();
 
-	void print_min_menu();
+	void print_back_menu1();
 
-	void print_min_menu2();
+	void print_back_menu2();
 
-	void print_min_menux();
+	void print_back_menu_for_close_func();
 
-	void choise_min_menu( bool * case_x);
+	void choise_back_menu1 (bool & case_x);
 
-	void choise_min_menu2(bool * case_x);
+	void choise_back_menu2(bool & case_x);
 
-	void choise_min_menux(bool * case_x, bool * menux);
+	void choise_back_menu_for_close_func(bool & case_x, bool & menux);
 
-	void show_list_of_vegetable(FuncForData & work);
-	
-	void print_from_room(FuncForData & work);
-	
-	void add_a_new_type_of_vegetables(FuncForData & work);
-	
-	void download_a_batch_of_vegetable(FuncForData & work);
-	
-	void unload_a_batch_of_product(FuncForData & work);
-	
-	void unload_a_portion_of_the_batch(FuncForData & work);
-	
-	void print_all_archive(FuncForData & work);
+	void go_back_for_menu1(bool & case_x);
 
-	void print_Help();
+	void go_back_for_menu2(bool & case_x);
 
-	void print_about_prog();
-	
-	void exit_prog(FuncForData & work);
-
-	//functions for password
-
-	void del_veget(FuncForData & work);
-
-	void clear_archive(FuncForData & work);
-
-	void change_password(FuncForData & work);
+	void go_back_for_menu_for_close_func(bool & case_x, bool & menux);
 	
 
 };
