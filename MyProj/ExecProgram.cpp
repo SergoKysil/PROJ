@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "ExecProgram.h"
 
-
-
 ExecProgram::ExecProgram()
-{	
-	dataBase = new DataBase("Storage", "localhost", "root", "");
+{
+	this->DataName = std::make_shared<std::string>("Storage");
+	this->Host = std::make_shared<std::string>("localhost");
+	this->User = std::make_shared<std::string>("root");
+	this->PasswordForData = std::make_shared<std::string>("");
+	dataBase = new DataBase(*this->DataName.get(), *this->Host.get(), *this->User.get(), *this->PasswordForData.get());
 	func = new FuncForMenu();
 	password = new Password();
 	info = new Info();
@@ -13,36 +15,36 @@ ExecProgram::ExecProgram()
 
 bool ExecProgram::Start()
 {
-	if (dataBase->connect_db())
+	if (dataBase->connect_db())//If successful connect
 		return true;
 	else
 		return false;
-
 }
 
 void ExecProgram::function_for_case1()
 {
-	bool go_back_from_case_1 = true;
+	bool go_back_from_case_1 = true;//Initializing loop exit from condition 
 	while (go_back_from_case_1)
 	{
-		dataBase->print_vegetable();
+		if (dataBase->print_vegetable()) {}
+		else std::cout << "There is no vegetable!" << std::endl;
 		func->go_back_for_menu1(go_back_from_case_1);
 	}
 }
 
 void ExecProgram::function_for_case2()
 {
-	bool go_back_from_case_2 = true;
+	bool go_back_from_case_2 = true;//Initializing loop exit from condition 
 	while (go_back_from_case_2)
 	{
 		if (dataBase->print_vegetable()) {
 			std::cout << "\nChoose which product you want to see: ";
-			int choise;
-			std::cin >> choise;
-			if (dataBase->check_ID_veg(choise)) {
+			int choise_product;
+			std::cin >> choise_product;
+			if (dataBase->check_ID_veg(choise_product)) {
 				system("cls");
-				const std::string name_veg = dataBase->get_name_veg(choise);
-				if (dataBase->print_from_stor_room(name_veg)) {}
+				const std::string name_vegetable = dataBase->get_name_veg(choise_product);
+				if (dataBase->print_from_stor_room(name_vegetable)) {}
 				else std::cout << "Storage is empty!" << std::endl;
 			}
 			else std::cout << "There is no such ID!" << std::endl;
@@ -54,7 +56,7 @@ void ExecProgram::function_for_case2()
 
 void ExecProgram::function_for_case3()
 {
-	bool go_back_from_case_3 = true;
+	bool go_back_from_case_3 = true;//Initializing loop exit from condition 
 	while (go_back_from_case_3)
 	{
 		std::cout << "Enter a product name: ";
@@ -62,14 +64,14 @@ void ExecProgram::function_for_case3()
 		std::cin >> t_name;
 		dataBase->add_name_veg(t_name);
 		dataBase->create_new_table(t_name);
-		std::cout << ("Operation was successful!");
+		std::cout << ("\nOperation was successful!\n");
 		func->go_back_for_menu1(go_back_from_case_3);
 	}
 }
 
 void ExecProgram::function_for_case4()
 {
-	bool go_back_from_case_4 = true;
+	bool go_back_from_case_4 = true;//Initializing loop exit from condition 
 	while (go_back_from_case_4)
 	{
 		if (dataBase->print_vegetable()) {
@@ -82,7 +84,7 @@ void ExecProgram::function_for_case4()
 				int count;
 				std::cin >> count;
 				dataBase->addBatch(name_veg, count);
-				std::cout << ("Operation was successful!");
+				std::cout << ("\nOperation was successful!\n");
 			}
 			else std::cout << "There is no such ID!" << std::endl;
 		}
@@ -93,7 +95,7 @@ void ExecProgram::function_for_case4()
 
 void ExecProgram::function_for_case5()
 {
-	bool go_back_from_case_5 = true;
+	bool go_back_from_case_5 = true;//Initializing loop exit from condition 
 	while (go_back_from_case_5)
 	{
 		if (dataBase->print_vegetable()) {
@@ -111,7 +113,7 @@ void ExecProgram::function_for_case5()
 						int count = dataBase->get_count(name_veg, choise_batch);
 						dataBase->AddToArchive(name_veg, count);
 						dataBase->dellBatch(name_veg, choise_batch);
-						std::cout << ("Operation was successful!");
+						std::cout << ("\nOperation was successful!\n");
 					}
 					else std::cout << "There is no such party!" << std::endl;
 				}
@@ -126,7 +128,7 @@ void ExecProgram::function_for_case5()
 
 void ExecProgram::function_for_case6()
 {
-	bool go_back_from_case_6 = true;
+	bool go_back_from_case_6 = true;//Initializing loop exit from condition 
 	while (go_back_from_case_6)
 	{
 		if (dataBase->print_vegetable()) {
@@ -146,7 +148,7 @@ void ExecProgram::function_for_case6()
 						std::cin >> count;
 						if (dataBase->changeCount(name_veg, choise_batch, count) == true) {
 							dataBase->AddToArchive(name_veg, count);
-							std::cout << ("Operation was successful!");
+							std::cout << ("\nOperation was successful!\n");
 						}
 						else std::cout << ("There are not so many products in the lot\n");
 					}
@@ -163,7 +165,7 @@ void ExecProgram::function_for_case6()
 
 void ExecProgram::function_for_case7()
 {
-	bool go_back_from_case_7 = true;
+	bool go_back_from_case_7 = true;//Initializing loop exit from condition 
 	while (go_back_from_case_7)
 	{
 		if (dataBase->print_all_archive()) {}
@@ -174,18 +176,18 @@ void ExecProgram::function_for_case7()
 
 void ExecProgram::function_for_close_case1(bool & go_back)
 {
-	bool go_back_from_closed_case_1 = true;
+	bool go_back_from_closed_case_1 = true;//Initializing loop exit from condition 
 	while (go_back_from_closed_case_1)
 	{
 		if (dataBase->print_vegetable()) {
 			std::cout << "\nChoose which product you want to delete: ";
-			int choise;
-			std::cin >> choise;
-			if (dataBase->check_ID_veg(choise)) {
-				std::string name_veg = dataBase->get_name_veg(choise);
-				dataBase->del_name_veg(choise);
-				dataBase->drop_table(name_veg);
-				std::cout << ("Operation was successful!");
+			int choise_product_to_delete;
+			std::cin >> choise_product_to_delete;
+			if (dataBase->check_ID_veg(choise_product_to_delete)) {
+				std::string name_vegetable = dataBase->get_name_veg(choise_product_to_delete);
+				dataBase->del_name_veg(choise_product_to_delete);
+				dataBase->drop_table(name_vegetable);
+				std::cout << ("\nOperation was successful!\n");
 			}
 			else std::cout << "There is no product under this ID!" << std::endl;
 		}
@@ -196,18 +198,18 @@ void ExecProgram::function_for_close_case1(bool & go_back)
 
 void ExecProgram::function_for_close_case2(bool & go_back)
 {
-	bool go_back_from_closed_case_2 = true;
+	bool go_back_from_closed_case_2 = true;//Initializing loop exit from condition 
 	while (go_back_from_closed_case_2)
 	{
 		dataBase->ClearArchive();
-		std::cout << ("Operation was successful!");
+		std::cout << ("\nOperation was successful!\n");
 		func->go_back_for_menu_for_close_func(go_back_from_closed_case_2, go_back);
 	}
 }
 
 void ExecProgram::function_for_close_case3(bool & go_back)
 {
-	bool go_back_from_closed_case_3 = true;
+	bool go_back_from_closed_case_3 = true;//Initializing loop exit from condition 
 	while (go_back_from_closed_case_3)
 	{
 		password->change_password(*dataBase);
@@ -216,10 +218,12 @@ void ExecProgram::function_for_close_case3(bool & go_back)
 }
 
 void ExecProgram::function_for_case8()
-{
+{	
 	if (password->password_verification(*dataBase))
 	{
-		bool menu_with_close_func = true;
+		system("cls");
+		std::cout << "Warning!!!Using these features will lead to the inevitable deletion of data!!!" << std::endl << std::endl;
+		bool menu_with_close_func = true;//Initializing loop exit from condition 
 		while (menu_with_close_func)
 		{
 			func->print_menu_for_closed_function();
@@ -260,11 +264,12 @@ void ExecProgram::function_for_case8()
 			}
 		}
 	}
+	else std::cout << "\nInvalid Password!!!\n";
 }
 
 void ExecProgram::function_for_info_case1(bool & go_back)
 {
-	bool go_back_from_info_case_back_1 = true;
+	bool go_back_from_info_case_back_1 = true;//Initializing loop exit from condition 
 	while (go_back_from_info_case_back_1)
 	{
 		info->Help_for_use();
@@ -275,7 +280,7 @@ void ExecProgram::function_for_info_case1(bool & go_back)
 
 void ExecProgram::function_for_info_case2(bool & go_back)
 {
-	bool go_back_from_info_case_back_2 = true;
+	bool go_back_from_info_case_back_2 = true;//Initializing loop exit from condition 
 	while (go_back_from_info_case_back_2)
 	{
 		info->About_the_program();
@@ -286,7 +291,7 @@ void ExecProgram::function_for_info_case2(bool & go_back)
 
 void ExecProgram::function_for_case9()
 {
-	bool menu_info = true;
+	bool menu_info = true;//Initializing loop exit from condition 
 	while (menu_info)
 	{
 		func->print_info_menu();
@@ -327,7 +332,7 @@ void ExecProgram::Implementation_Program()
 	if (Start())
 	{
 		system("cls");
-		bool menu_choise = true;
+		bool menu_choise = true;//Initializing loop exit from condition 
 		while (menu_choise)
 		{
 			system("cls");
@@ -407,3 +412,11 @@ void ExecProgram::Implementation_Program()
 	}
 }
 
+ExecProgram::~ExecProgram()
+{
+	dataBase->~DataBase();
+	delete dataBase;
+	delete info;
+	delete password;
+	delete func;
+}

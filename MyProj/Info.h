@@ -9,4 +9,3 @@ public:
 
 	void About_the_program();
 };
-

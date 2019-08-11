@@ -11,7 +11,7 @@ class FuncForMenu
 public:
 
 	void print_menu();
-	
+
 	void print_menu_for_closed_function();
 
 	void print_info_menu();
@@ -22,7 +22,7 @@ public:
 
 	void print_back_menu_for_close_func();
 
-	void choise_back_menu1 (bool & case_x);
+	void choise_back_menu1(bool & case_x);
 
 	void choise_back_menu2(bool & case_x);
 
@@ -33,7 +33,6 @@ public:
 	void go_back_for_menu2(bool & case_x);
 
 	void go_back_for_menu_for_close_func(bool & case_x, bool & menux);
-	
+
 
 };
-

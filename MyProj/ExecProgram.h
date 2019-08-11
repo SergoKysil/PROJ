@@ -17,17 +17,17 @@ public:
 	bool Start();
 
 	void function_for_case1();
-	
+
 	void function_for_case2();
-	
+
 	void function_for_case3();
-	
+
 	void function_for_case4();
-	
+
 	void function_for_case5();
-	
+
 	void function_for_case6();
-	
+
 	void function_for_case7();
 
 	void function_for_close_case1(bool & go_back);
@@ -43,9 +43,10 @@ public:
 	void function_for_info_case2(bool & go_back);
 
 	void function_for_case9();
-	
+
 	void Implementation_Program();
 
+	~ExecProgram();
 
 private:
 	DataBase * dataBase;
@@ -53,5 +54,11 @@ private:
 	Password * password;
 	Info * info;
 
+
+protected:
+	std::shared_ptr<std::string> DataName;
+	std::shared_ptr<std::string> Host;
+	std::shared_ptr<std::string> User;
+	std::shared_ptr<std::string> PasswordForData;
 };
 

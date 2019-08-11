@@ -2,29 +2,36 @@
 #include "Password.h"
 
 
-bool Password::password_verification(DataBase & work)
+
+
+std::string Password::hash(std::string & pass)
 {
+	std::string hashpass = pass;
+	std::size_t str_hash = std::hash<std::string>{}(hashpass);
+	return std::to_string(str_hash);
+}
+
+bool Password::password_verification(DataBase & data)
+{	
 	std::cout << "Enter password: ";
 	std::string entered_pass;
 	std::cin >> entered_pass;
-	std::string current_pass = work.get_password();
-	return (entered_pass == current_pass);
+	std::string hashpass = hash(entered_pass);
+	std::string current_pass = data.get_password();	
+	return (hashpass == current_pass);
 }
 
-void Password::change_password(DataBase & work)
+void Password::change_password(DataBase & data)
 {
-	std::cout << "Enter your old password: ";
-	std::string entered_password;
-	std::cin >> entered_password;
-	std::string current_password = work.get_password();
-	if (entered_password == current_password)
+
+	if (password_verification(data))
 	{
 		std::cout << "Enter new password: ";
 		std::string new_password;
 		std::cin >> new_password;
-		work.change_password(new_password);
+		std::string new_hash_password = hash(new_password);
+		data.change_password(new_hash_password);
 		std::cout << "Your password was changed!" << std::endl;
 	}
 	else std::cout << "Invalid password!" << std::endl;
 }
-

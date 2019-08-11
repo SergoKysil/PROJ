@@ -70,10 +70,10 @@ bool DataBase::print_vegetable()
 {
 	std::string query = "SELECT * FROM vegetable;"; //query request
 	queryRequestWithResult(query);
-	if (checkForEmpty()){
+	if (checkForEmpty()) {
 		std::cout << "ID\tName vegetable" << std::endl;
 		while (row = mysql_fetch_row(res))
-			std::cout << ("%s: \t%s\n", row[0], row[1]) << std::endl;//print result
+			printf("%s: \t%s\n", row[0], row[1]);//print result
 		return true;
 	}
 	return false;
@@ -120,10 +120,10 @@ bool DataBase::print_from_stor_room(const std::string & tablename)
 	std::string t_name = tablename;
 	std::string query = "SELECT * FROM " + t_name + ";";
 	queryRequestWithResult(query);
-	if (checkForEmpty()){
+	if (checkForEmpty()) {
 		std::cout << "ID\tName veget\tCount Prod\tDelivery Date" << std::endl;
 		while (row = mysql_fetch_row(res))
-			std::cout << ("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);
+			printf("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);
 		return true;
 	}
 	return false;
@@ -162,16 +162,16 @@ bool DataBase::changeCount(const std::string & name_vegetable, const int & id, c
 {
 	int count_form_table = get_count(name_vegetable, id);//set result from function
 	int count_from_user = change_count;
-	if (count_form_table >= count_from_user){
+	if (count_form_table > count_from_user) {
 		int changed_count = count_form_table - count_from_user;
 		std::string query = "UPDATE " + name_vegetable + " SET CountProd = " + std::to_string(changed_count) + " WHERE ID = " + std::to_string(id) + ";";
 		queryRequest(query);
 		return true;
 	}
-	else if (count_form_table = count_from_user){
+	else if (count_form_table = count_from_user) {
 		dellBatch(name_vegetable, id);
 	}
-	else{
+	else {
 		std::cout << "Not enought count in batch of products!" << std::endl;
 		return false;
 	}
@@ -206,7 +206,7 @@ bool DataBase::print_all_archive()
 	{
 		std::cout << "ID\tName veget\tCount Prod\tUnloading Date" << std::endl;
 		while (row = mysql_fetch_row(res))
-			std::cout << ("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);//print result
+			printf("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);//print result
 		return true;
 	}
 	return false;
@@ -214,7 +214,7 @@ bool DataBase::print_all_archive()
 
 void DataBase::AddToArchive(const std::string & name_vegetable, const int & count_product)
 {
-	std::string query = "INSERT INTO Archive(NAME_VEG, CountProd, UnloadingDate) VALUES('" + name_vegetable + "'," +std::to_string(count_product) + ", NOW())";
+	std::string query = "INSERT INTO Archive(NAME_VEG, CountProd, UnloadingDate) VALUES('" + name_vegetable + "'," + std::to_string(count_product) + ", NOW())";
 	queryRequest(query);
 }
 
@@ -231,8 +231,8 @@ std::string DataBase::get_password()
 	std::string query = "SELECT Password FROM password WHERE ID = 1 LIMIT 1;";
 	queryRequestWithResult(query);
 	row = mysql_fetch_row(res);
-	std::string passwo = row[0];
-	return passwo;
+	std::string password = row[0];
+	return password;
 }
 
 void DataBase::change_password(const std::string & password)
