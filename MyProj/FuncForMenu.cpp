@@ -30,7 +30,7 @@ void FuncForMenu::print_menu_for_closed_function()
 void FuncForMenu::print_info_menu()
 {
 	std::string text = "1. Help for use\n\
-2. About program\n\n\
+2. About program\n\
 3. Return to the main menu\n\
 0. Exit\n";
 	std::cout << text << std::endl;
@@ -62,11 +62,11 @@ void FuncForMenu::print_back_menu_for_close_func()
 void FuncForMenu::choise_back_menu1(bool & case_x)
 {
 	int choise_case;
-	std::cout << "\nYour choise: ";
-	std::cin >> choise_case;
 	bool back = true;
 	while (back)
 	{
+		std::cout << "\nYour choise: ";
+		std::cin >> choise_case;
 		if (choise_case == 1) {
 			system("cls");
 			back = false;
@@ -88,11 +88,11 @@ void FuncForMenu::choise_back_menu1(bool & case_x)
 void FuncForMenu::choise_back_menu2(bool & case_x)
 {
 	int choise_case;
-	std::cout << "\nYour choise: ";
-	std::cin >> choise_case;
 	bool back = true;
 	while (back)
 	{
+		std::cout << "\nYour choise: ";
+		std::cin >> choise_case;
 		if (choise_case == 1) {
 			system("cls");
 			back = false;
@@ -110,11 +110,11 @@ void FuncForMenu::choise_back_menu2(bool & case_x)
 void FuncForMenu::choise_back_menu_for_close_func(bool & case_x, bool & menux)
 {
 	int choise_case;
-	std::cout << "\nYour choise: ";
-	std::cin >> choise_case;
 	bool back = true;
 	while (back)
 	{
+		std::cout << "\nYour choise: ";
+		std::cin >> choise_case;
 		if (choise_case == 1) {
 			system("cls");
 			back = false;

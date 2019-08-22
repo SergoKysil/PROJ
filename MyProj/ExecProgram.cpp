@@ -13,6 +13,16 @@ ExecProgram::ExecProgram()
 	info = new Info();
 }
 
+ExecProgram::~ExecProgram()
+{
+	dataBase->~DataBase();
+	delete dataBase;
+	delete info;
+	delete password;
+	delete func;
+}
+
+
 bool ExecProgram::Start()
 {
 	if (dataBase->connect_db())//If successful connect
@@ -80,7 +90,7 @@ void ExecProgram::function_for_case4()
 			std::cin >> choise;
 			if (dataBase->check_ID_veg(choise)) {
 				const std::string name_veg = dataBase->get_name_veg(choise);
-				std::cout << "Enter the quantity of products: ";
+				std::cout << "\nEnter the quantity of products: ";
 				int count;
 				std::cin >> count;
 				dataBase->addBatch(name_veg, count);
@@ -106,7 +116,7 @@ void ExecProgram::function_for_case5()
 				system("cls");
 				const std::string name_veg = dataBase->get_name_veg(choise);
 				if (dataBase->print_from_stor_room(name_veg)) {
-					std::cout << "Select the batch you want to unload: ";
+					std::cout << "\nSelect the batch you want to unload: ";
 					int choise_batch;
 					std::cin >> choise_batch;
 					if (dataBase->check_ID(choise_batch, name_veg)) {
@@ -139,14 +149,14 @@ void ExecProgram::function_for_case6()
 				system("cls");
 				const std::string name_veg = dataBase->get_name_veg(choise);
 				if (dataBase->print_from_stor_room(name_veg)) {
-					std::cout << "Select the portion of the batch you want to unload: ";
+					std::cout << "\nSelect the portion of the batch you want to unload: ";
 					int choise_batch;
 					std::cin >> choise_batch;
 					if (dataBase->check_ID(choise_batch, name_veg)) {
-						std::cout << "Enter count: ";
+						std::cout << "\nEnter count: ";
 						int count;
 						std::cin >> count;
-						if (dataBase->changeCount(name_veg, choise_batch, count) == true) {
+						if (dataBase->changeCount(name_veg, choise_batch, count)) {
 							dataBase->AddToArchive(name_veg, count);
 							std::cout << ("\nOperation was successful!\n");
 						}
@@ -396,7 +406,9 @@ void ExecProgram::Implementation_Program()
 				function_for_case9();
 			}
 
-			case 0: exit(0);
+			case 0: { 
+				
+				exit(0); }
 				break;
 
 			default:
@@ -412,11 +424,3 @@ void ExecProgram::Implementation_Program()
 	}
 }
 
-ExecProgram::~ExecProgram()
-{
-	dataBase->~DataBase();
-	delete dataBase;
-	delete info;
-	delete password;
-	delete func;
-}

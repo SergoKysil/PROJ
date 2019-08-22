@@ -14,6 +14,8 @@ public:
 
 	ExecProgram();
 
+	~ExecProgram();
+
 	bool Start();
 
 	void function_for_case1();
@@ -46,7 +48,7 @@ public:
 
 	void Implementation_Program();
 
-	~ExecProgram();
+	
 
 private:
 	DataBase * dataBase;

@@ -47,8 +47,8 @@ void DataBase::queryRequestWithResult(const std::string & query)
 
 bool DataBase::checkForEmpty()
 {
-	int rows = mysql_num_rows(res);
-	if (rows > 0) return true;
+	int rows = mysql_num_rows(res);//get count of rows in table
+	if (rows > 0) return true;//check
 	else return false;
 }
 
@@ -59,9 +59,9 @@ void DataBase::saveAll()
 
 DataBase::~DataBase()//CLOSE CONNECTION TO DB
 {
-	delete res;
-	delete conn;
-	mysql_close(conn);
+	delete res;//delete result
+	mysql_close(conn);//close connection
+	delete conn;//delete connection
 }
 
 //WORK WITH TABLE VEGETABLE
@@ -69,10 +69,10 @@ DataBase::~DataBase()//CLOSE CONNECTION TO DB
 bool DataBase::print_vegetable()
 {
 	std::string query = "SELECT * FROM vegetable;"; //query request
-	queryRequestWithResult(query);
+	queryRequestWithResult(query);//request with return result
 	if (checkForEmpty()) {
 		std::cout << "ID\tName vegetable" << std::endl;
-		while (row = mysql_fetch_row(res))
+		while (row = mysql_fetch_row(res))//as long as there are deadlines
 			printf("%s: \t%s\n", row[0], row[1]);//print result
 		return true;
 	}
@@ -83,7 +83,7 @@ std::string DataBase::get_name_veg(const int &id)
 {
 	auto temp = std::to_string(id);//convert to string
 	std::string query = "SELECT NAME_VEG FROM vegetable WHERE ID = " + temp + ";"; //creation query request
-	queryRequestWithResult(query);
+	queryRequestWithResult(query);//request with return result
 	std::string value;//value for save
 	row = mysql_fetch_row(res);//assigning to arr
 	value = row[0];// assigning to variable
@@ -100,15 +100,15 @@ void DataBase::del_name_veg(const int &id)
 {
 	auto temp = std::to_string(id);//convert to string
 	std::string query = "DELETE FROM vegetable WHERE ID = " + temp + ";";//query request
-	queryRequest(query);
+	queryRequest(query);// send a request
 }
 
 bool DataBase::check_ID_veg(const int & id)
 {
 	int ID = id;
 	std::string query = "SELECT ID FROM vegetable";
-	queryRequestWithResult(query);
-	while (row = mysql_fetch_row(res))
+	queryRequestWithResult(query);//request with return result
+	while (row = mysql_fetch_row(res))//as long as there are deadlines
 		if (std::to_string(ID) == row[0]) return true;
 	return false;
 }
@@ -117,13 +117,13 @@ bool DataBase::check_ID_veg(const int & id)
 
 bool DataBase::print_from_stor_room(const std::string & tablename)
 {
-	std::string t_name = tablename;
+	std::string t_name = tablename;//get value
 	std::string query = "SELECT * FROM " + t_name + ";";
-	queryRequestWithResult(query);
+	queryRequestWithResult(query);//request with return result
 	if (checkForEmpty()) {
 		std::cout << "ID\tName veget\tCount Prod\tDelivery Date" << std::endl;
-		while (row = mysql_fetch_row(res))
-			printf("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);
+		while (row = mysql_fetch_row(res))//as long as there are deadlines
+			printf("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);//print result with conversation lines
 		return true;
 	}
 	return false;
@@ -133,19 +133,19 @@ void DataBase::create_new_table(const std::string &tablename)
 {
 	std::string t_name = tablename;
 	std::string query = "CREATE TABLE " + t_name + "(ID INT AUTO_INCREMENT PRIMARY KEY, NAME_VEG VARCHAR(20), CountProd INT DEFAULT 0, DeliveryDate DATETIME NOT NULL);";
-	queryRequest(query);
+	queryRequest(query);// send a request
 }
 
 void DataBase::addBatch(const std::string & name_vegetable, const int & count_product)
 {
 	std::string query = "INSERT INTO " + name_vegetable + "(NAME_VEG, CountProd, DeliveryDate) VALUES('" + name_vegetable + "', " + std::to_string(count_product) + ", NOW());";
-	queryRequest(query);
+	queryRequest(query);// send a request
 }
 
 int DataBase::get_count(const std::string & name_vegetable, const int & id)
 {
 	std::string query = "SELECT CountProd FROM " + name_vegetable + " WHERE ID = " + std::to_string(id) + " LIMIT 1;";
-	queryRequestWithResult(query);
+	queryRequestWithResult(query);//request with return result
 	std::string value;//value for save
 	row = mysql_fetch_row(res);//assigning to arr
 	value = row[0];// assigning to variable
@@ -155,26 +155,24 @@ int DataBase::get_count(const std::string & name_vegetable, const int & id)
 void DataBase::dellBatch(const std::string & name_vegetable, const int & id)
 {
 	std::string query = "DELETE FROM " + name_vegetable + " WHERE ID = " + std::to_string(id);
-	queryRequest(query);
+	queryRequest(query);// send a request
 }
 
 bool DataBase::changeCount(const std::string & name_vegetable, const int & id, const int & change_count)
 {
 	int count_form_table = get_count(name_vegetable, id);//set result from function
-	int count_from_user = change_count;
+	int count_from_user = change_count;//get count from user
 	if (count_form_table > count_from_user) {
 		int changed_count = count_form_table - count_from_user;
 		std::string query = "UPDATE " + name_vegetable + " SET CountProd = " + std::to_string(changed_count) + " WHERE ID = " + std::to_string(id) + ";";
-		queryRequest(query);
+		queryRequest(query);// send a request
 		return true;
 	}
-	else if (count_form_table = count_from_user) {
+	else if (count_form_table == count_from_user) {
 		dellBatch(name_vegetable, id);
+		return true;
 	}
-	else {
-		std::cout << "Not enought count in batch of products!" << std::endl;
-		return false;
-	}
+	else return false;
 }
 
 bool DataBase::check_ID(const int & ID, const std::string & name_veg)
@@ -182,8 +180,8 @@ bool DataBase::check_ID(const int & ID, const std::string & name_veg)
 	std::string t_name = name_veg;
 	int id = ID;
 	std::string query = "SELECT ID FROM " + t_name + ";";
-	queryRequestWithResult(query);
-	while (row = mysql_fetch_row(res))
+	queryRequestWithResult(query);//request with return result
+	while (row = mysql_fetch_row(res))//as long as there are deadlines
 		if (std::to_string(id) == row[0])
 			return true;
 	return false;
@@ -193,7 +191,7 @@ void DataBase::drop_table(const std::string &tablename)
 {
 	std::string t_name = tablename;
 	std::string query = "DROP TABLE " + t_name + ";";
-	queryRequest(query);
+	queryRequest(query);// send a request
 }
 
 //FUNCTIONS FOR ARCHIVE
@@ -201,12 +199,12 @@ void DataBase::drop_table(const std::string &tablename)
 bool DataBase::print_all_archive()
 {
 	std::string query = "SELECT * FROM Archive;";
-	queryRequestWithResult(query);
+	queryRequestWithResult(query);//request with return result
 	if (checkForEmpty())
 	{
 		std::cout << "ID\tName veget\tCount Prod\tUnloading Date" << std::endl;
-		while (row = mysql_fetch_row(res))
-			printf("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);//print result
+		while (row = mysql_fetch_row(res))//as long as there are deadlines
+			printf("%s: \t%s\t\t%s\t\t%s\n", row[0], row[1], row[2], row[3]);//print result with conversation lines
 		return true;
 	}
 	return false;
@@ -215,13 +213,13 @@ bool DataBase::print_all_archive()
 void DataBase::AddToArchive(const std::string & name_vegetable, const int & count_product)
 {
 	std::string query = "INSERT INTO Archive(NAME_VEG, CountProd, UnloadingDate) VALUES('" + name_vegetable + "'," + std::to_string(count_product) + ", NOW())";
-	queryRequest(query);
+	queryRequest(query);// send a request
 }
 
 void DataBase::ClearArchive()
 {
 	std::string query = "TRUNCATE TABLE Archive;";
-	queryRequest(query);
+	queryRequest(query);// send a request
 }
 
 //FUNCTIONS FOR PASSWORD
@@ -229,8 +227,8 @@ void DataBase::ClearArchive()
 std::string DataBase::get_password()
 {
 	std::string query = "SELECT Password FROM password WHERE ID = 1 LIMIT 1;";
-	queryRequestWithResult(query);
-	row = mysql_fetch_row(res);
+	queryRequestWithResult(query);//request with return result
+	row = mysql_fetch_row(res);//assigning to arr
 	std::string password = row[0];
 	return password;
 }
@@ -239,7 +237,7 @@ void DataBase::change_password(const std::string & password)
 {
 	std::string new_password = password;
 	std::string query = "UPDATE password SET Password = " + new_password + " WHERE ID = 1;";
-	queryRequest(query);
+	queryRequest(query);// send a request
 }
 
 
